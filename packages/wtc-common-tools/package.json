@@ -1,0 +1,26 @@
+{
+  "name": "@wtc/wtc-common-tools",
+  "version": "0.0.1",
+  "description": "wtc-common-tools",
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "authors": [
+    "wangtiechuanmail@163.com"
+  ]
+}
