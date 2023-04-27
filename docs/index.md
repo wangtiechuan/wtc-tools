@@ -1,25 +1,25 @@
 ---
 hero:
-  title: WTC-TOOLS
-  description: wtc-tools
+  title: VICTOR-TOOLS
+  description: victor-tools
   actions:
     - text: Hello
       link: /
     - text: World
       link: /
 features:
-  - title: wtc-common-tools
-    emoji: 💎
-    description: wtc-common-tools
-  - title: 'wtc-node-tools'
-    emoji: 💎
-    description: wtc-node-tools
-  - title: wtc-web-tools
-    emoji: 💎
-    description: wtc-web-tools
-  - title: 'wtc-react-comp'
-    emoji: 💎
-    description: wtc-react-comp
+  - title: victor-common-tools
+    description: victor-common-tools
+  - title: 'victor-node-tools'
+    description: victor-node-tools
+  - title: victor-web-tools
+    description: victor-web-tools
+  - title: 'victor-react-comp'
+    description: victor-react-comp
+  - title: 'victor-go-database'
+    description: victor-go-database
+  - title: 'victor-exchange-api'
+    description: victor-exchange-api
 ---
 
-wtc-tools
+victor-tools

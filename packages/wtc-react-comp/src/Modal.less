@@ -1,0 +1,230 @@
+.modal-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+
+  z-index: 100;
+  //   transition: all linear 300ms;
+
+  .modal-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  &.visible {
+    display: block;
+    .modal-mask {
+      display: block;
+    }
+  }
+
+  &.hidden {
+    display: none;
+    .modal-mask {
+      display: none;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes topIn {
+    from {
+      transform: translate(-50%, -100%);
+    }
+    to {
+      transform: translateY(-50%, 0);
+    }
+  }
+
+  @keyframes topOut {
+    from {
+      transform: translateY(-50%, 0);
+    }
+    to {
+      transform: translate(-50%, -100%);
+    }
+  }
+
+  @keyframes bottomIn {
+    from {
+      transform: translate(-50%, 100%);
+    }
+    to {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @keyframes bottomOut {
+    from {
+      transform: translate(-50%, 0);
+    }
+    to {
+      transform: translate(-50%, 100%);
+    }
+  }
+
+  @keyframes leftIn {
+    from {
+      transform: translate(-100%, -50%);
+    }
+    to {
+      transform: translate(0, -50%);
+    }
+  }
+
+  @keyframes leftOut {
+    from {
+      transform: translate(0, -50%);
+    }
+    to {
+      transform: translate(-100%, -50%);
+    }
+  }
+
+  @keyframes rightIn {
+    from {
+      transform: translate(100%, -50%);
+    }
+    to {
+      transform: translate(0, -50%);
+    }
+  }
+
+  @keyframes rightOut {
+    from {
+      transform: translate(0, -50%);
+    }
+    to {
+      transform: translate(100%, -50%);
+    }
+  }
+
+  .modal-content {
+    position: relative;
+    z-index: 2;
+    max-height: 100vh;
+    max-width: 100vw;
+    // background-color: red;
+    // height: 400px;
+    // width: 200px;
+  }
+
+  &.center {
+    .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &.fadeIn {
+      .modal-content {
+        animation: fadeIn linear 300ms forwards;
+      }
+    }
+
+    &.fadeOut {
+      .modal-content {
+        animation: fadeOut linear 300ms forwards;
+      }
+    }
+  }
+
+  &.top {
+    .modal-content {
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+    &.fadeIn {
+      .modal-content {
+        animation: topIn linear 300ms forwards;
+      }
+    }
+
+    &.fadeOut {
+      .modal-content {
+        animation: topOut linear 300ms forwards;
+      }
+    }
+  }
+  &.bottom {
+    .modal-content {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+    &.fadeIn {
+      .modal-content {
+        animation: bottomIn linear 300ms forwards;
+      }
+    }
+
+    &.fadeOut {
+      .modal-content {
+        animation: bottomOut linear 300ms forwards;
+      }
+    }
+  }
+  &.left {
+    .modal-content {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &.fadeIn {
+      .modal-content {
+        animation: leftIn linear 300ms forwards;
+      }
+    }
+
+    &.fadeOut {
+      .modal-content {
+        animation: leftOut linear 300ms forwards;
+      }
+    }
+  }
+  &.right {
+    .modal-content {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &.fadeIn {
+      .modal-content {
+        animation: rightIn linear 300ms forwards;
+      }
+    }
+
+    &.fadeOut {
+      .modal-content {
+        animation: rightOut linear 300ms forwards;
+      }
+    }
+  }
+}

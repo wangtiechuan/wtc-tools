@@ -1,7 +1,7 @@
 {
-  "name": "@wtc/wtc-common-tools",
+  "name": "@victor/victor-common-tools",
   "version": "0.0.1",
-  "description": "wtc-common-tools",
+  "description": "victor-common-tools",
   "license": "MIT",
   "main": "cjs/index.js",
   "module": "esm/index.js",

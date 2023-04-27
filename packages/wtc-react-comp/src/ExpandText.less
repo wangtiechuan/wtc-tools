@@ -1,0 +1,27 @@
+.num-line {
+  /*! autoprefixer: off */
+  box-orient: vertical;
+  -webkit-box-orient: vertical;
+  /*! autoprefixer: on */
+  // line-clamp: 2;
+  // -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+
+  &_1 {
+    white-space: nowrap;
+  }
+
+  .generate-line(@n, @i: 2) when (@i =< @n) {
+    &_@{i} {
+      display: -webkit-box;
+      line-clamp: @i;
+      -webkit-line-clamp: @i;
+    }
+    .generate-line(@n, (@i + 1));
+  }
+
+  .generate-line(20);
+}

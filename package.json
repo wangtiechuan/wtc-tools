@@ -1,7 +1,7 @@
 {
-  "name": "wtc-tools",
+  "name": "victor-tools",
   "private": true,
-  "description": "wtc-tools",
+  "description": "victor-tools",
   "license": "MIT",
   "files": [
     "dist"
@@ -12,16 +12,20 @@
   "scripts": {
     "build": "lerna run build",
     "dev": "dumi dev",
+    "devi": "nrm use taobao && pnpm i",
     "docs:build": "dumi build",
+    "preinstall": "npx -y only-allow pnpm",
     "lint": "npm run lint:es && npm run lint:css",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "pub": "npm run build && lerna publish",
     "start": "npm run dev",
     "watch": "lerna run build:watch",
-    "watch:common": "lerna run build:watch --scope=@wtc/wtc-common-tools",
-    "watch:node": "lerna run build:watch --scope=@wtc/wtc-node-tools",
-    "watch:react": "lerna run build:watch --scope=@wtc/wtc-react-comp",
-    "watch:web": "lerna run build:watch --scope=@wtc/wtc-web-tools"
+    "watch:common": "lerna run build:watch --scope=@victor/victor-common-tools",
+    "watch:database": "lerna run build:watch --scope=@victor/victor-go-database",
+    "watch:exchange": "lerna run build:watch --scope=@victor/victor-exchange-api",
+    "watch:node": "lerna run build:watch --scope=@victor/victor-node-tools",
+    "watch:react": "lerna run build:watch --scope=@victor/victor-react-comp",
+    "watch:web": "lerna run build:watch --scope=@victor/victor-web-tools"
   },
   "commitlint": {
     "extends": [
@@ -46,24 +50,29 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "@umijs/lint": "^4.0.0",
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^18.16.1",
+    "@umijs/lint": "^4.0.67",
     "babel-preset-minify": "^0.5.2",
-    "dumi": "^2.0.0-rc.0",
-    "eslint": "^8.23.0",
-    "father": "^4.1.0",
-    "husky": "^8.0.1",
-    "lerna": "^6.3.0",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "prettier-plugin-organize-imports": "^3.0.0",
-    "prettier-plugin-packagejson": "^2.2.18",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "stylelint": "^14.9.1"
+    "dumi": "^2.1.22",
+    "eslint": "^8.39.0 ",
+    "father": "^4.1.9",
+    "husky": "^8.0.3",
+    "lerna": "^6.6.1",
+    "lint-staged": "^13.2.2",
+    "lodash": "^4.17.21",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "stylelint": "^15.6.0",
+    "ts-node": "^10.9.1"
   },
   "peerDependencies": {
+    "@types/node": "*",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },

@@ -1,0 +1,34 @@
+{
+  "name": "@victor/victor-exchange-api",
+  "version": "0.0.1",
+  "description": "victor-exchange-api",
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "dependencies": {
+    "ccxt": "^3.0.79",
+    "https-proxy-agent": "^5.0.1",
+    "lodash": "^4.17.21",
+    "rxjs": "^7.8.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^18.16.1"
+  },
+  "authors": [
+    "wangtiechuanmail@163.com"
+  ]
+}

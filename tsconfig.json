@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
     "strict": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./",
+    "allowJs": true,
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "@wtc/wtc-common-tools": ["./packages/wtc-common-tools/src/index.ts"],
-      "@wtc/wtc-node-tools": ["./packages/wtc-node-tools/src/index.ts"],
-      "@wtc/wtc-web-tools": ["./packages/wtc-web-tools/src/index.ts"],
-      "@wtc/wtc-react-comp": ["./packages/wtc-react-comp/src/index.ts"]
+      "@victor/victor-common-tools": [
+        "./packages/wtc-common-tools/src/index.ts"
+      ],
+      "@victor/victor-node-tools": ["./packages/wtc-node-tools/src/index.ts"],
+      "@victor/victor-web-tools": ["./packages/wtc-web-tools/src/index.ts"],
+      "@victor/victor-react-comp": ["./packages/wtc-react-comp/src/index.ts"],
+      "@victor/victor-go-database": ["./packages/wtc-go-database/src/index.ts"],
+      "@victor/victor-exchange-api": [
+        "./packages/wtc-exchange-api/src/index.ts"
+      ]
     }
   },
   "include": [

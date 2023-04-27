@@ -1,0 +1,83 @@
+// where mysql
+// 点击浏览之后，不容易跳到那个目录，所以可以commond+shift+g，弹出“go to the folder”，输入想要跳转的路径就可以了
+
+// mysql.server start
+
+// mysql -u root -p
+
+// show databases;
+// create database test;
+// use test
+// create table Book(id INT, name CHAR(20));
+// show tables;
+
+// drop table Book;
+// drop database test;
+
+// mysql.server stop
+
+// 初始化数据库和数据库对应的表
+// npx prisma migrate dev --name init 
+
+// 如果修改了prisma/schema.prisma，需要重新执行命令:
+// npx prisma generate
+// npx prisma migrate dev --name init
+
+// npx prisma db push
+
+//  prisma db pull
+//  prisma generate 
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL") // DATABASE_URL="mysql://root:123456@localhost:3306/prisma"
+}
+
+// demo 开始
+// model DemoPost {
+//     id        Int      @id @default(autoincrement())
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+//     title     String   @db.VarChar(255)
+//     content   String?
+//     published Boolean  @default(false)
+//     author    DemoUser @relation(fields: [authorId], references: [id])
+//     authorId  Int
+// }
+
+// model DemoProfile {
+//     id     Int      @id @default(autoincrement())
+//     bio    String?
+//     user   DemoUser @relation(fields: [userId], references: [id])
+//     userId Int      @unique
+// }
+
+// model DemoUser {
+//     id      Int          @id @default(autoincrement())
+//     email   String       @unique
+//     name    String?
+//     posts   DemoPost[]
+//     profile DemoProfile?
+// }
+
+// demo 结束
+
+// k线开始
+model KlineBian {
+    id        String  @id
+    timestamp BigInt
+    open      Decimal
+    high      Decimal
+    low       Decimal
+    close     Decimal
+    volume    Decimal
+    symbol    String
+    timeframe String
+
+    @@index([symbol, timeframe, timestamp])
+}
+
+// k线结束

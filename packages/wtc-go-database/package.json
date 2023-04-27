@@ -1,0 +1,29 @@
+{
+  "name": "@victor/victor-go-database",
+  "version": "0.0.1",
+  "description": "victor-go-database",
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "dependencies": {
+    "@prisma/client": "4.12.0",
+    "prisma": "4.12.0"
+  },
+  "peerDependencies": {},
+  "authors": [
+    "wangtiechuanmail@163.com"
+  ]
+}

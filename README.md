@@ -1,23 +1,15 @@
-# wtc-tools
+# victor-tools
 
-[![NPM version](https://img.shields.io/npm/v/wtc-tools.svg?style=flat)](https://npmjs.org/package/wtc-tools)
-[![NPM downloads](http://img.shields.io/npm/dm/wtc-tools.svg?style=flat)](https://npmjs.org/package/wtc-tools)
-
-wtc-tools
-
-## Usage
-
-TODO
-
-## Options
-
-TODO
-
+victor-tools
 ## Development
 
 ```bash
+$ sudo n stable
+
+$ nrm use tabobao
+
 # install dependencies
-$ pnpm install
+$ pnpm i
 
 # develop library by docs demo
 $ pnpm start
@@ -31,8 +23,6 @@ $ pnpm run build:watch
 # build docs
 $ pnpm run docs:build
 
-# check your project for potential problems
-$ pnpm run doctor
 ```
 
 ## LICENSE

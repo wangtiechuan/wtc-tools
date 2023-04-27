@@ -1,7 +1,7 @@
 {
-  "name": "@wtc/wtc-node-tools",
+  "name": "@victor/victor-node-tools",
   "version": "0.0.1",
-  "description": "wtc-node-tools",
+  "description": "victor-node-tools",
   "license": "MIT",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -18,8 +18,9 @@
     "doctor": "father doctor",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "dependencies": {},
-  "peerDependencies": {},
+  "dependencies": {
+    "source-map": "^0.7.4"
+  },
   "authors": [
     "wangtiechuanmail@163.com"
   ]
