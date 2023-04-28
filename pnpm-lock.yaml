@@ -114,6 +114,15 @@ importers:
         specifier: ^18.0.11
         version: 18.0.11
 
+  packages/wtc-save-kline:
+    dependencies:
+      '@victor/victor-exchange-api':
+        specifier: workspace:^
+        version: link:../wtc-exchange-api
+      '@victor/victor-go-database':
+        specifier: workspace:^
+        version: link:../wtc-go-database
+
   packages/wtc-web-tools: {}
 
 packages:

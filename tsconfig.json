@@ -19,7 +19,8 @@
       "@victor/victor-go-database": ["./packages/wtc-go-database/src/index.ts"],
       "@victor/victor-exchange-api": [
         "./packages/wtc-exchange-api/src/index.ts"
-      ]
+      ],
+      "@victor/victor-save-kline": ["./packages/wtc-save-kline/src/index.ts"]
     }
   },
   "include": [

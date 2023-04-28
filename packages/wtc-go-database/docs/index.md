@@ -6,5 +6,5 @@ nav:
 # Introduction
 
 ```jsx
-import * as reactcomp from '@victor/victor-go-database';
+import * as godatabase from '@victor/victor-go-database';
 ```

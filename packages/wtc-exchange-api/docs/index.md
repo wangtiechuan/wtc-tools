@@ -6,5 +6,5 @@ nav:
 # Introduction
 
 ```jsx
-import * as reactcomp from '@victor/victor-exchange-api';
+import * as exchangeapi from '@victor/victor-exchange-api';
 ```

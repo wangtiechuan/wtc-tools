@@ -1,0 +1,29 @@
+{
+  "name": "@victor/victor-save-kline",
+  "version": "0.0.1",
+  "description": "victor-save-kline",
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "dependencies": {
+    "@victor/victor-exchange-api": "workspace:^",
+    "@victor/victor-go-database": "workspace:^"
+  },
+  "peerDependencies": {},
+  "authors": [
+    "wangtiechuanmail@163.com"
+  ]
+}
