@@ -8,3 +8,5 @@ export * from './parseUrl';
 export * from './removeItemInArr';
 export * from './sortByRules';
 export * from './templateRender';
+export * from './coverObject';
+

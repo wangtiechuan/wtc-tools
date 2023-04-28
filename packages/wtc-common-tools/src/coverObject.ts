@@ -1,4 +1,4 @@
-import { isObject } from 'lodash';
+import { isObject } from './props';
 
 export function coverObject<T = Record<string, any>>(
   initObj?: T,

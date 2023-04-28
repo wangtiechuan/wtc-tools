@@ -1,4 +1,4 @@
-import { coverObject } from '../tools/coverObject';
+import { coverObject } from '@victor/victor-common-tools';
 import { ExchangeWholeApi } from './exchange-api';
 import { pro } from './exchange-entry';
 import {

@@ -1,0 +1,34 @@
+import { NetworkError } from 'ccxt';
+// import { ExchangeWholeApi } from './api/exchange-api';
+import { ExchangeTypes } from './api/exchange-props';
+import { ExchangeWholeWatch } from './api/exchange-watch';
+import { ccxtCatchError } from './tools/ccxtCatchError';
+
+const TradeSymbol = 'BTC/USDT';
+
+export async function test(TradeSymbol: string) {
+  // const exg = new ExchangeWholeApi(ExchangeTypes.spot);
+  const exg = new ExchangeWholeWatch(ExchangeTypes.spot);
+
+  // exg
+  //   .fetchOHLCV(TradeSymbol, '4h')
+  //   .then((res) => {
+  //     console.log(res.length);
+  //   })
+  //   .catch((e) => ccxtCatchError(e));
+
+  while (true) {
+    let ticker;
+    try {
+      ticker = await exg.watchTicker(TradeSymbol);
+      console.log(ticker.close);
+    } catch (e) {
+      ccxtCatchError(e);
+      if (!(e instanceof NetworkError)) {
+        throw e;
+      }
+    }
+  }
+}
+
+test(TradeSymbol);

@@ -1,6 +1,6 @@
+import { coverObject } from '@victor/victor-common-tools';
 import ccxt, { Exchange } from 'ccxt';
 import Keys from '../keys/local.keys';
-import { coverObject } from '../tools/coverObject';
 import { fetchImplementation } from '../tools/fetchImplementation';
 import { s1 } from '../tools/timeFrameToMS';
 import { OrderSide, OrderType } from './exchange-entry';

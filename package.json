@@ -58,7 +58,7 @@
     "babel-preset-minify": "^0.5.2",
     "dumi": "^2.1.22",
     "eslint": "^8.39.0",
-    "father": "^4.1.9",
+    "father": "^4.2.0",
     "husky": "^8.0.3",
     "lerna": "^6.6.1",
     "lint-staged": "^13.2.2",

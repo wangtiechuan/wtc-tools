@@ -1,6 +1,5 @@
-import { OHLCV } from '@victor/victor-exchange-api';
 import { prismaClicent } from '../client';
-import { ccxtToKline, KlineItem } from './tools/ccxtToKline';
+import { ccxtToKline, KlineItem, OHLCV } from './tools/ccxtToKline';
 
 export async function upsertKline(kline: KlineItem) {
   try {

@@ -1,9 +1,12 @@
-import { prismaClicent } from "./client";
+import { prismaClicent } from './client';
 
-export async function disconnect(e?: any) {
-  await prismaClicent.$disconnect();
-  if (e) {
-    console.error(e);
-    process.exit(1);
+export async function disconnect() {
+  try {
+    await prismaClicent.$disconnect();
+  } catch (e) {
+    if (e) {
+      console.error(e);
+      process.exit(1);
+    }
   }
 }

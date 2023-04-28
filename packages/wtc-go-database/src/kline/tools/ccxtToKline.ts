@@ -1,5 +1,6 @@
-import { OHLCV } from '@victor/victor-exchange-api';
 import { createKlineId } from './createKlineId';
+
+export type OHLCV = [number, number, number, number, number, number];
 
 export type NumberLikeType = number | string;
 
