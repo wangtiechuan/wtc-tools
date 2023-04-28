@@ -19,14 +19,15 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "ccxt": "^3.0.79",
+    "@victor/victor-common-tools": "workspace:^",
+    "ccxt": "^3.0.80",
     "https-proxy-agent": "^5.0.1",
     "lodash": "^4.17.21",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.194",
-    "@types/node": "^18.16.1"
+    "@types/node": "^18.16.2"
   },
   "authors": [
     "wangtiechuanmail@163.com"

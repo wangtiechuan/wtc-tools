@@ -13,4 +13,4 @@ export function chunkArray<T = any>(array?: T[], chunkSize?: number): T[][] {
   return chunks;
 }
 
-console.log(chunkArray([1,2,3],2))
+// console.log(chunkArray([1,2,3],2))

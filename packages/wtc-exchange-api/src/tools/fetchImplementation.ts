@@ -1,6 +1,6 @@
+import { isBrowser } from '@victor/victor-common-tools';
 import { catchError, of, retry } from 'rxjs';
 import { fetchSub } from './fetchSub';
-import { isBrowser } from './isBrowser';
 
 export function tinyViewRes(jsonData: any, noIsTinyMark?: boolean) {
   let isTiny = false;
