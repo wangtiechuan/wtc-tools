@@ -1,4 +1,3 @@
-import { NetworkError } from 'ccxt';
 // import { ExchangeWholeApi } from './api/exchange-api';
 import { ExchangeTypes } from './api/exchange-props';
 import { ExchangeWholeWatch } from './api/exchange-watch';
@@ -24,9 +23,6 @@ export async function test(TradeSymbol: string) {
       console.log(ticker.close);
     } catch (e) {
       ccxtCatchError(e);
-      if (!(e instanceof NetworkError)) {
-        throw e;
-      }
     }
   }
 }

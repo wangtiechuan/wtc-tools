@@ -23,6 +23,7 @@ class ExchangeApiBase {
     options: {
       recvWindow: s1 * 1,
     },
+    precisionMode: undefined,
   };
 
   exchange: RealExchange;
@@ -76,6 +77,12 @@ class ExchangeApi extends ExchangeApiBase {
   }
   safeMarket(marketId?: any, market?: any, delimiter?: any, marketType?: any) {
     return this.exchange.safeMarket(marketId, market, delimiter, marketType);
+  }
+  amountToPrecision(symbol: string, amount: any) {
+    return this.exchange.amountToPrecision(symbol, amount);
+  }
+  priceToPrecision(symbol: string, price: any) {
+    return this.exchange.priceToPrecision(symbol, price);
   }
   costToPrecision(symbol: string, cost: any) {
     return this.exchange.costToPrecision(symbol, cost);
@@ -377,4 +384,59 @@ class ExchangeApi extends ExchangeApiBase {
   //   }
 }
 
-export class ExchangeWholeApi extends ExchangeApi {}
+export class ExchangeFuncApi extends ExchangeApi {
+  timeframes() {
+    return this.exchange.timeframes;
+  }
+  loadMarkets(reload?: boolean | undefined, params?: any) {
+    return this.exchange.loadMarkets(reload, params);
+  }
+  markets(reload?: boolean | undefined, params?: any) {
+    return this.loadMarkets(reload, params);
+  }
+  async currencies(params?: any) {
+    if (
+      !this.exchange.currencies ||
+      !Object.keys(this.exchange.currencies).length
+    ) {
+      await this.fetchCurrencies(params);
+    }
+    return this.exchange.currencies;
+  }
+  parse8601(x: any) {
+    return this.exchange.parse8601(x);
+  }
+  iso8601(timestamp: any) {
+    return this.exchange.iso8601(timestamp);
+  }
+  seconds() {
+    return this.exchange.seconds();
+  }
+  milliseconds() {
+    return this.exchange.milliseconds();
+  }
+  microseconds() {
+    return this.exchange.microseconds();
+  }
+  calculateFee(
+    symbol: string,
+    type: string,
+    side: string,
+    amount: number,
+    price: number,
+    takerOrMaker?: string,
+    params?: any,
+  ) {
+    return this.exchange.calculateFee(
+      symbol,
+      type,
+      side,
+      amount,
+      price,
+      takerOrMaker,
+      params,
+    );
+  }
+}
+
+export class ExchangeWholeApi extends ExchangeFuncApi {}
