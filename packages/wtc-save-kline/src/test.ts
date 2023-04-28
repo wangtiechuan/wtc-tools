@@ -1,22 +1,27 @@
+import { ExchangeWholeWatch, d1 } from '@victor/victor-exchange-api';
+import { findLastKline, upsertCcxtKline } from '@victor/victor-go-database';
+import { cycleFillKlineData } from './kline';
+
+const TradeSymbol = 'BTC/USDT';
 
 const myTimeframes = [
-  // "1m", // 太多不能查会出问题 Failed to convert rust `String` into napi `string`
-  "3m",
-  "5m",
-  "15m",
-  "30m",
-  "1h",
-  "2h",
-  "4h",
-  "6h",
-  "8h",
-  "12h",
-  "1d",
-  "3d",
-  "1w",
+  "1m", // 太多不能查会出问题 Failed to convert rust `String` into napi `string`
+  '3m',
+  '5m',
+  '15m',
+  '30m',
+  '1h',
+  '2h',
+  '4h',
+  '6h',
+  '8h',
+  '12h',
+  '1d',
+  '3d',
+  '1w',
 ];
 export async function test() {
-  const exg = new ExchangeApi();
+  const exg = new ExchangeWholeWatch();
 
   const timeframes = exg.timeframes();
 
@@ -27,12 +32,12 @@ export async function test() {
   const klineDataSince = new Date().getTime() - 10 * 365 * d1;
 
   realTimeframes.forEach(async (timeframe: any) => {
-    const fetchOHLCV: FetchOHLCVFunc = (since) => {
+    const fetchOHLCV = (since?: number) => {
       return exg.fetchOHLCV(TradeSymbol, timeframe, since);
     };
-    const toSaveData: ToSaveDataFunc = (d) => {
+    const toSaveData = (d: any) => {
       // console.log(d[0], d[d.length - 1]);
-      d.forEach((item) => {
+      d.forEach((item: any) => {
         upsertCcxtKline(item, TradeSymbol, timeframe);
       });
       // appendIntoFile("./aa.json", JSON.stringify(d));
@@ -47,28 +52,9 @@ export async function test() {
     const fillFullRes = await cycleFillKlineData(
       klineDataSinceReal,
       fetchOHLCV,
-      toSaveData
+      toSaveData,
     );
     console.log(fillFullRes);
-
-    // console.log(res);
-    // console.log(res?.map(item=>item.timestamp));
-
-    // const res2 = checkKlineFull(res as any, timeframe);
-    // console.log(timeframe, res2?.length);
-
-    // appendIntoFile(
-    //   "./bb.json",
-    //   JSON.stringify(
-    //     res2?.map((item) => {
-    //       item.kline.timestamp = Number(item.kline.timestamp);
-    //       item.borKline.timestamp = Number(item.borKline.timestamp);
-    //       return {
-    //         ...item,
-    //       };
-    //     })
-    //   )
-    // );
 
     // const fillRes = await checKlineAndFill(
     //   fetchOHLCV,
