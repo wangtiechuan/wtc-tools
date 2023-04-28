@@ -33,7 +33,7 @@ export async function test() {
 
   realTimeframes.forEach(async (timeframe: any) => {
     const fetchOHLCV = (since?: number) => {
-      return exg.fetchOHLCV(TradeSymbol, timeframe, since);
+      return exg.fetchOHLCV(TradeSymbol, timeframe, since, 1000);
     };
     const toSaveData = (d: any) => {
       // console.log(d[0], d[d.length - 1]);

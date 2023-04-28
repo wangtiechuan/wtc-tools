@@ -32,7 +32,6 @@ interface PromiseHasCancel extends Promise<any> {
 }
 
 export const fetchImplementation = (url: string, options?: RequestInit) => {
-  console.log(url);
   const realOptions = { ...options };
 
   if (!isBrowser) {
