@@ -1,5 +1,5 @@
-import { OHLCV } from "../../../../exchange_api/src/api/exchangeApi";
-import { createKlineId } from "./createKlineId";
+import { OHLCV } from '@victor/victor-exchange-api';
+import { createKlineId } from './createKlineId';
 
 export type NumberLikeType = number | string;
 
@@ -18,7 +18,7 @@ export interface KlineItem {
 export function ccxtToKline(
   item: OHLCV,
   symbol: string,
-  timeframe: string
+  timeframe: string,
 ): KlineItem {
   const [timestamp, open, high, low, close, volume] = item;
   const info: KlineItem = {

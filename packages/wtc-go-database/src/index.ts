@@ -1,5 +1,4 @@
-import { prismaClicent } from "./src/client";
-import { deleteKline, findManyKline } from "./src/kline";
+import { prismaClicent } from './client';
 
 export async function test() {
   // const d = {
@@ -42,10 +41,10 @@ export async function test() {
 
   const all = await prismaClicent.klineBian.findMany({
     where: {
-      timeframe: "1h",
+      timeframe: '1h',
     },
   });
-  console.log(all)
+  console.log(all);
 
   // const all1 = await prismaClicent.klineBian.delete({
   //   where: {

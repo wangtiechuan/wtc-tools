@@ -1,6 +1,6 @@
-import { OHLCV } from "../../../exchange_api/src/api/exchangeApi";
-import { prismaClicent } from "../client";
-import { ccxtToKline, KlineItem } from "./tools/ccxtToKline";
+import { OHLCV } from '@victor/victor-exchange-api';
+import { prismaClicent } from '../client';
+import { ccxtToKline, KlineItem } from './tools/ccxtToKline';
 
 export async function upsertKline(kline: KlineItem) {
   try {
@@ -15,7 +15,7 @@ export async function upsertKline(kline: KlineItem) {
     });
     return res;
   } catch (e) {
-    console.log("upsertKline");
+    console.log('upsertKline');
     console.log(kline);
     console.log(e);
   }
@@ -24,7 +24,7 @@ export async function upsertKline(kline: KlineItem) {
 export async function upsertCcxtKline(
   item: OHLCV,
   symbol: string,
-  timeframe: string
+  timeframe: string,
 ) {
   const kline = ccxtToKline(item, symbol, timeframe);
 
@@ -39,13 +39,13 @@ export async function findManyKline(symbol?: string, timeframe?: string) {
         timeframe,
       },
       orderBy: {
-        timestamp: "asc",
+        timestamp: 'asc',
       },
       // take: 3,
     });
     return res;
   } catch (e) {
-    console.log("findManyKline");
+    console.log('findManyKline');
     console.log(symbol, timeframe);
     console.log(e);
   }
@@ -60,7 +60,7 @@ export async function findKline({ id }: { id: string }) {
     });
     return res;
   } catch (e) {
-    console.log("findKline");
+    console.log('findKline');
     console.log(id);
     console.log(e);
   }
@@ -74,12 +74,12 @@ export async function findFirstKline(symbol?: string, timeframe?: string) {
         timeframe,
       },
       orderBy: {
-        timestamp: "asc",
+        timestamp: 'asc',
       },
     });
     return res;
   } catch (e) {
-    console.log("findFirstKline");
+    console.log('findFirstKline');
     console.log(symbol, timeframe);
     console.log(e);
   }
@@ -93,12 +93,12 @@ export async function findLastKline(symbol?: string, timeframe?: string) {
         timeframe,
       },
       orderBy: {
-        timestamp: "desc",
+        timestamp: 'desc',
       },
     });
     return res;
   } catch (e) {
-    console.log("findLastKline");
+    console.log('findLastKline');
     console.log(symbol, timeframe);
     console.log(e);
   }
@@ -113,7 +113,7 @@ export async function deleteKline({ id }: { id: string }) {
     });
     return res;
   } catch (e) {
-    console.log("deleteKline");
+    console.log('deleteKline');
     console.log(id);
     console.log(e);
   }

@@ -6,6 +6,8 @@ import { ExchangeTypes } from './api/exchange-props';
 import { ExchangeWholeWatch } from './api/exchange-watch';
 import { ccxtCatchError } from './tools/ccxtCatchError';
 
+export * from './api/exchange-entry'
+
 const TradeSymbol = 'BTC/USDT';
 
 export async function test(TradeSymbol: string) {
