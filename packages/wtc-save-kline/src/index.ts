@@ -22,3 +22,5 @@ export async function saveKline() {
     }
   }
 }
+
+saveKline();

@@ -22,4 +22,7 @@ export {
   exchanges,
   pro,
 } from 'ccxt';
-export { OrderSide, OrderType } from 'ccxt/js/src/base/types';
+
+// export { OrderSide, OrderType } from 'ccxt/js/src/base/types';
+export type OrderSide = 'buy' | 'sell';
+export type OrderType = 'limit' | 'market';
