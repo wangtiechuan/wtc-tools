@@ -27,6 +27,7 @@
     ".dumi/**/*",
     ".dumirc.ts",
     "packages/*/src/**/*",
-    "packages/*/docs/**/*"
+    "packages/*/docs/**/*",
+    "node_modules/ccxt/js/*"
   ]
 }
