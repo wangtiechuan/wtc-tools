@@ -18,13 +18,15 @@ class ExchangeApiBase {
     secret: Keys.SecretKey,
     timeout: s1 * 5,
     enableRateLimit: true,
-    fetchImplementation: fetchImplementation,
+    fetchImplementation,
+    AbortError: DOMException, // 设置 fetchImplementation（不是ccxt内的fetch-node时） 的时候，需要同时 AbortError 和 FetchError，否则会报错
+    FetchError: TypeError, // 设置 fetchImplementation（不是ccxt内的fetch-node时） 的时候，需要同时 AbortError 和 FetchError，否则会报错
     // verbose: true, // ccxt log打印
     options: {
       recvWindow: s1 * 1,
     },
-    precisionMode: undefined,
-    paddingMode: undefined,
+    // precisionMode: undefined,
+    // paddingMode: undefined,
   };
 
   exchange: RealExchange;

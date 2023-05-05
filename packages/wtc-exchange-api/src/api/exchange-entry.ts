@@ -44,15 +44,25 @@ export const ccxtFunctions = {
   // @ts-ignore
   isEmpty: ccxt.isEmpty,
   // @ts-ignore
-  // merge: ccxt.merge,
+  uuid: ccxt.uuid,
   // @ts-ignore
-  // isArray: ccxt.isArray,
+  precisionFromString: ccxt.precisionFromString,
   // @ts-ignore
-  // isNumber: ccxt.isNumber,
+  now: ccxt.now,
+  // @ts-ignore
+  iso8601: ccxt.iso8601,
+  // @ts-ignore
+  parse8601: ccxt.parse8601,
+  // @ts-ignore
+  parseDate: ccxt.parseDate,
+  // @ts-ignore
+  ymd: ccxt.ymd,
+  // @ts-ignore
+  isNumber: ccxt.isNumber,
   // @ts-ignore
   isObject: ccxt.isObject,
   // @ts-ignore
-  // numberToString: ccxt.numberToString,
+  numberToString: ccxt.numberToString,
   // ...ccxt
 };
 
