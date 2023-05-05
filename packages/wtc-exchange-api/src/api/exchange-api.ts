@@ -16,7 +16,7 @@ class ExchangeApiBase {
   protected exchangeConfig: ExchangeConfig = {
     apiKey: Keys.APIKey,
     secret: Keys.SecretKey,
-    timeout: s1 * 30,
+    timeout: s1 * 5,
     enableRateLimit: true,
     fetchImplementation: fetchImplementation,
     // verbose: true, // ccxt log打印
@@ -24,6 +24,7 @@ class ExchangeApiBase {
       recvWindow: s1 * 1,
     },
     precisionMode: undefined,
+    paddingMode: undefined,
   };
 
   exchange: RealExchange;
@@ -305,27 +306,6 @@ class ExchangeApi extends ExchangeApiBase {
   //   fetchLedger(code?: string, since?: number, limit?: number, params?: any) {
   //     return this.exchange.fetchLedger(code, since, limit, params);
   //   }
-  request(
-    path: any,
-    api?: string,
-    method?: string,
-    params?: any,
-    headers?: any,
-    body?: any,
-    config?: any,
-    context?: any,
-  ) {
-    return this.exchange.request(
-      path,
-      api,
-      method,
-      params,
-      headers,
-      body,
-      config,
-      context,
-    );
-  }
   //   reduceMargin(symbol: string, amount: any, params?: any) {
   //     return this.exchange.reduceMargin(symbol, amount, params);
   //   }

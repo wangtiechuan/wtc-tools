@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@victor/victor-common-tools": "workspace:^",
-    "ccxt": "^3.0.80",
+    "ccxt": "^3.0.93",
     "https-proxy-agent": "^5.0.1",
     "rxjs": "^7.8.1"
   },

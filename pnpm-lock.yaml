@@ -73,8 +73,8 @@ importers:
         specifier: workspace:^
         version: link:../wtc-common-tools
       ccxt:
-        specifier: ^3.0.80
-        version: 3.0.80
+        specifier: ^3.0.93
+        version: 3.0.93
       https-proxy-agent:
         specifier: ^5.0.1
         version: 5.0.1
@@ -4880,8 +4880,8 @@ packages:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
     dev: true
 
-  /ccxt@3.0.80:
-    resolution: {integrity: sha512-0AUXmeULwlNb6dOuqMqCz7rO4tw0fMO5Pse+lPtIloQ0AD64KzjqR0fo92Q/fuoRrK3chHt8zHFX1jtjf9rpxw==}
+  /ccxt@3.0.93:
+    resolution: {integrity: sha512-YAzYmhOQjSM0Jcg/obR4igZUogzNmp6Y1JZkuWnRAeWK1pebPe1PEQuX/jybd2nUWZnGBgJp7x56c4cuEuAgdg==}
     engines: {node: '>=15.0.0'}
     requiresBuild: true
     dependencies:

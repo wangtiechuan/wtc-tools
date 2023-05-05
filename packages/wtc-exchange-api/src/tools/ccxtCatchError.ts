@@ -1,12 +1,24 @@
-import ccxt from 'ccxt';
+import { ccxtErrors } from '../api/exchange-entry';
 
 export function ccxtCatchError(e?: any, onerr?: (e?: any) => void): any {
-  if (e instanceof ccxt.BaseError) {
-    console.log(`警告:请求失败 ${e.constructor.name}  ${e.message}`);
+  const errorName = e.constructor.name || '';
+  const errorMsg = e.message || e.statusText || e.status || '';
+  const errorUrl = e.url || '';
+
+  let errorType = '';
+  if (e instanceof ccxtErrors.BaseError) {
+    errorType = 'BaseError';
+  } else if (e instanceof ccxtErrors.ExchangeError) {
+    errorType = 'ExchangeError';
   } else {
-    console.log(
-      `警告:请求失败 ${e.url} ${e.message || e.statusText || e.status}`,
-    );
+    errorType = 'OtherError';
   }
+
+  console.log(
+    `警告:请求失败 ${errorType} ${errorName} ${errorMsg} ${errorUrl} `,
+  );
+
+  // console.log(e);
+
   onerr?.(e);
 }

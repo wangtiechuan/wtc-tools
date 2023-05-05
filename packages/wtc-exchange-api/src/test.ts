@@ -16,12 +16,14 @@ export async function test(TradeSymbol: string) {
   //   })
   //   .catch((e) => ccxtCatchError(e));
 
-  while (true) {
+  let hasError = false;
+  while (!hasError) {
     let ticker;
     try {
       ticker = await exg.watchTicker(TradeSymbol);
       console.log(ticker.close);
     } catch (e) {
+      hasError = true;
       ccxtCatchError(e);
     }
   }
