@@ -14,16 +14,16 @@ export function cycleFillKlineData(
   endSince?: number,
 ) {
   let since = fromSince;
-  return new Promise<true>((resolve, reject) => {
+  return new Promise<boolean>((resolve, reject) => {
     let count = 0;
     let timeMark = 0;
     const func = () => {
       fetchOHLCV(Number(since) - 1000 * 60 * 60 * 8) //  减(东八区)是为了保证数据中包含since
         .then(async (data) => {
-          const dataLen = data.length;
+          const dataLen = data?.length;
           // console.log(`timeframe:${timeframe} K线数据长度:${dataLen}`);
-          if (dataLen === 0) {
-            resolve(true);
+          if (!dataLen) {
+            resolve(dataLen === 0);
             return;
           }
           count += 1;
