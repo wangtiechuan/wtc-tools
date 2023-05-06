@@ -4,7 +4,11 @@ import {
   ccxtFunctions,
   d1,
 } from '@victor/victor-exchange-api';
-import { findLastKline, upsertCcxtKline } from '@victor/victor-go-database';
+import {
+  findFirstKline,
+  findLastKline,
+  upsertCcxtKline,
+} from '@victor/victor-go-database';
 import { cycleFillKlineData } from './kline';
 
 const TradeSymbol = 'BTC/USDT';
@@ -51,14 +55,21 @@ export async function test() {
     };
 
     // const res = await findManyKline(TradeSymbol, timeframe);
-    // const res1 = await findFirstKline(TradeSymbol, timeframe);
+    const res1 = await findFirstKline(TradeSymbol, timeframe);
     const res2 = await findLastKline(TradeSymbol, timeframe);
     // const res3 = await findKline({ id: res?.id! });
 
+    console.log(`${timeframe} ----- `);
+    console.log('res1', {
+      ...res1,
+      timestamp: ccxtFunctions.iso8601(res1?.timestamp),
+    });
     console.log('res2', {
       ...res2,
       timestamp: ccxtFunctions.iso8601(res2?.timestamp),
     });
+
+    return;
 
     const klineDataSinceReal = Number(res2?.timestamp || klineDataSince);
     const fillFullRes = await cycleFillKlineData(
