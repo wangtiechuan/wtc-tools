@@ -69,7 +69,7 @@ export async function test() {
       timestamp: ccxtFunctions.iso8601(res2?.timestamp),
     });
 
-    return;
+    // return;
 
     const klineDataSinceReal = Number(res2?.timestamp || klineDataSince);
     const fillFullRes = await cycleFillKlineData(
