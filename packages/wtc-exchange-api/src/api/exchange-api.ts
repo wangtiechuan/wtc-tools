@@ -455,6 +455,9 @@ export class ExchangeFuncApi extends ExchangeApi {
   delay(timeout: any, method: any, ...args: any[]) {
     return this.exchange.delay(timeout, method, ...args);
   }
+  parseNumber(value: any, d?: number) {
+    return this.exchange.parseNumber(value, d);
+  }
   realTimeframes(myTimeframes?: string[]) {
     const timeframes = this.timeframes();
     if (!myTimeframes?.length) {

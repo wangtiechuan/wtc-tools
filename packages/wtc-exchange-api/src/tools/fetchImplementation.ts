@@ -1,6 +1,8 @@
-import { isBrowser } from '@victor/victor-common-tools';
-import { catchError, of, retry } from 'rxjs';
-import { fetchSub } from './fetchSub';
+import { ccxtFunctions } from '../api/exchange-entry';
+// import { agent } from './proxy';
+// @ts-ignore
+// import { fetch } from 'ccxt/js/src/static_dependencies/node-fetch';
+const fetchInstance = fetch;
 
 export function tinyViewRes(jsonData: any, noIsTinyMark?: boolean) {
   let isTiny = false;
@@ -27,14 +29,10 @@ export function tinyViewRes(jsonData: any, noIsTinyMark?: boolean) {
   return { isTiny, data: func() };
 }
 
-interface PromiseHasCancel extends Promise<any> {
-  cancel?: () => void;
-}
-
 export const fetchImplementation = (url: string, options?: RequestInit) => {
-  const realOptions = { ...options };
+  const realOptions: any = { ...options };
 
-  if (!isBrowser) {
+  if (!ccxtFunctions.isBrowser) {
     Object.assign(realOptions, {
       // agent, // 有时候不需要代理
     });
@@ -43,39 +41,38 @@ export const fetchImplementation = (url: string, options?: RequestInit) => {
   let _resove: undefined | ((value: any) => void) = undefined;
   let _reject: undefined | ((reason?: any) => void) = undefined;
 
-  const p: PromiseHasCancel = new Promise<any>((resove, reject) => {
+  const p = new Promise<any>((resove, reject) => {
     _resove = resove;
     _reject = reject;
   });
 
-  const subOb = fetchSub(url, realOptions).pipe(
-    retry(2),
-    catchError((err) => {
-      _reject?.(err);
-      return of(err);
-    }),
-  );
-  const sb = subOb.subscribe((res) => {
-    try {
-      const resClone = res?.clone?.();
-      resClone?.json().then((d: any) => {
-        const tinyMsg = tinyViewRes(d);
+  fetchInstance(url, realOptions)
+    .then((res) => {
+      if (!res.ok) {
+        _reject?.(res);
+        return;
+      }
+      try {
+        const resClone = res?.clone?.();
+        resClone?.json().then((d) => {
+          const tinyMsg = tinyViewRes(d);
 
-        console.log(`----`);
-        console.log(`url: ${url}`);
-        console.log(
-          `res: tiny(${tinyMsg.isTiny}) ${JSON.stringify(tinyMsg.data)}`,
-        );
-        return d;
-      });
-    } catch (e) {
-      console.log(`url: ${url} res 克隆异常`);
-      console.log(e);
-    }
+          console.log(`----`);
+          console.log(`url: ${url}`);
+          console.log(
+            `res: tiny(${tinyMsg.isTiny}) ${JSON.stringify(tinyMsg.data)}`,
+          );
+          return d;
+        });
+      } catch (e) {
+        console.log(`url: ${url} res 克隆异常`);
+        console.log(e);
+      }
+      _resove?.(res);
+    })
+    .catch((error) => {
+      _reject?.(error);
+    });
 
-    _resove?.(res);
-  });
-
-  p.cancel = sb.unsubscribe;
   return p;
 };
