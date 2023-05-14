@@ -419,6 +419,55 @@ export class ExchangeFuncApi extends ExchangeApi {
       params,
     );
   }
+  decimalToPrecision(
+    x: any,
+    roundingMode: any,
+    numPrecisionDigits: any,
+    countingMode?: number,
+    paddingMode?: number,
+  ) {
+    return this.exchange.decimalToPrecision(
+      x,
+      roundingMode,
+      numPrecisionDigits,
+      countingMode,
+      paddingMode,
+    );
+  }
+  isEmpty(object: any) {
+    return this.exchange.isEmpty(object);
+  }
+  uuid(a?: any) {
+    return this.exchange.uuid(a);
+  }
+  precisionFromString(str?: any) {
+    return this.exchange.precisionFromString(str);
+  }
+  now() {
+    return this.exchange.now();
+  }
+  ymdhms(timestamp: any, infix: any) {
+    return this.exchange.ymdhms(timestamp, infix);
+  }
+  numberToString(x: any) {
+    return this.exchange.numberToString(x);
+  }
+  delay(timeout: any, method: any, ...args: any[]) {
+    return this.exchange.delay(timeout, method, ...args);
+  }
+  realTimeframes(myTimeframes?: string[]) {
+    const timeframes = this.timeframes();
+    if (!myTimeframes?.length) {
+      return Object.values(timeframes);
+    }
+    return myTimeframes?.reduce((v, item) => {
+      const realTimeframe = timeframes[item];
+      if (realTimeframe) {
+        v.push(realTimeframe);
+      }
+      return v;
+    }, [] as (string | number)[]);
+  }
 }
 
 export class ExchangeWholeApi extends ExchangeFuncApi {}

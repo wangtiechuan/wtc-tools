@@ -32,37 +32,15 @@ export const ccxtErrors = {
 
 export const ccxtFunctions = {
   // @ts-ignore
-  decimalToPrecision: ccxt.decimalToPrecision,
-  // @ts-ignore
   isBrowser: ccxt.isBrowser,
   // @ts-ignore
   sleep: ccxt.sleep,
   // @ts-ignore
-  extend: ccxt.extend,
-  // @ts-ignore
-  deepExtend: ccxt.deepExtend,
-  // @ts-ignore
   isEmpty: ccxt.isEmpty,
-  // @ts-ignore
-  uuid: ccxt.uuid,
-  // @ts-ignore
-  precisionFromString: ccxt.precisionFromString,
-  // @ts-ignore
-  now: ccxt.now,
   // @ts-ignore
   iso8601: ccxt.iso8601,
   // @ts-ignore
   parse8601: ccxt.parse8601,
-  // @ts-ignore
-  parseDate: ccxt.parseDate,
-  // @ts-ignore
-  ymd: ccxt.ymd,
-  // @ts-ignore
-  isNumber: ccxt.isNumber,
-  // @ts-ignore
-  isObject: ccxt.isObject,
-  // @ts-ignore
-  numberToString: ccxt.numberToString,
   // ...ccxt
 };
 
