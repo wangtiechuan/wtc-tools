@@ -1,7 +1,7 @@
 {
-  "name": "@victor/victor-exchange-api",
+  "name": "@victor/victor-kline-strategy",
   "version": "0.0.1",
-  "description": "victor-exchange-api",
+  "description": "victor-kline-strategy",
   "license": "MIT",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -19,13 +19,11 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "@victor/victor-common-tools": "workspace:^",
-    "ccxt": "^3.0.103",
-    "https-proxy-agent": "^5.0.1"
+    "@victor/victor-exchange-api": "workspace:^",
+    "@victor/victor-go-database": "workspace:^",
+    "talib-binding": "^1.0.2"
   },
-  "devDependencies": {
-    "@types/node": "^18.16.2"
-  },
+  "peerDependencies": {},
   "authors": [
     "wangtiechuanmail@163.com"
   ]

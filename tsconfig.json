@@ -20,7 +20,11 @@
       "@victor/victor-exchange-api": [
         "./packages/wtc-exchange-api/src/index.ts"
       ],
-      "@victor/victor-save-kline": ["./packages/wtc-save-kline/src/index.ts"]
+      "@victor/victor-save-kline": ["./packages/wtc-save-kline/src/index.ts"],
+      "@victor/victor-kline-strategy": [
+        "./packages/wtc-kline-strategy/src/index.ts"
+      ],
+      "@victor/victor-exchange-go": ["./packages/wtc-exchange-go/src/index.ts"]
     }
   },
   "include": [
