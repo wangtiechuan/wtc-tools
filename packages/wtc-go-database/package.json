@@ -19,8 +19,8 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0",
-    "prisma": "^4.13.0"
+    "@prisma/client": "^5.1.1",
+    "prisma": "^5.1.1"
   },
   "peerDependencies": {},
   "authors": [
