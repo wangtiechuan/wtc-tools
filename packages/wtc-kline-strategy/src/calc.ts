@@ -1,4 +1,6 @@
 import * as tb from 'talib-binding';
+import { Precise } from '@victor/victor-exchange-api';
+import { KlineItem } from '@victor/victor-go-database';
 
 // 用于在talib计算结果时（如ma计算会丢失前面的不够周期计算的数组），补足数组的长度
 function fillTaPreRes(taMethodRes: number[], optTime_Period: number) {
@@ -21,9 +23,6 @@ export const taEma: TaMaType = {
   ma: (inReal: number[], optTime_Period: number) =>
     fillTaPreRes(tb.EMA(inReal, optTime_Period), optTime_Period),
 };
-
-import { Precise } from '@victor/victor-exchange-api';
-import { KlineItem } from '@victor/victor-go-database';
 
 // 对输入的所有 nums 参数进行 Precise库中的方法 累计计算
 function cumulativeCalc(

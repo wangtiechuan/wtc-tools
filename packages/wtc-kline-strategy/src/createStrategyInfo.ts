@@ -5,6 +5,7 @@ import {
   TaMaType,
   TouchWeightPeriod,
   TouchWeightPeriodResProps,
+  changePercent,
   // changePercent,
   oneByOneState,
   taMa,
@@ -29,12 +30,12 @@ export function createStrategyInfo(
   const touchPeriods = new TouchWeightPeriod(taMaFac, data);
   const overBar = touchPeriods.overBarPeriod();
   const outBar = touchPeriods.outBarPeriod();
-  // const cp = changePercent(data);
+  const cp = changePercent(data);
   const obo = oneByOneState(data);
   const info: StrategyInfoProps = {
     overBar,
     outBar,
-    // cp,
+    cp,
     obo,
     // timeframe,
     // symbol,
