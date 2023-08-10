@@ -19,7 +19,9 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "klinecharts": "^9.5.0"
+    "klinecharts": "^9.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "authors": [
     "wangtiechuanmail@163.com"
