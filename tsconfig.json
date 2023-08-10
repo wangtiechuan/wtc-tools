@@ -24,7 +24,11 @@
       "@victor/victor-kline-strategy": [
         "./packages/wtc-kline-strategy/src/index.ts"
       ],
-      "@victor/victor-exchange-go": ["./packages/wtc-exchange-go/src/index.ts"]
+
+      "@victor/victor-exchange-go": ["./packages/wtc-exchange-go/src/index.ts"],
+      "@victor/victor-message-push": [
+        "./packages/wtc-message-push/src/index.ts"
+      ]
     }
   },
   "include": [

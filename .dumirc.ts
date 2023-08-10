@@ -12,9 +12,12 @@ export default defineConfig({
       { type: 'victor-go-database', dir: '/packages/wtc-go-database/docs' },
       { type: 'victor-exchange-api', dir: '/packages/wtc-exchange-api/docs' },
       { type: 'victor-save-kline', dir: '/packages/wtc-save-kline/docs' },
-      { type: 'victor-kline-strategy', dir: '/packages/wtc-kline-strategy/docs' },
+      {
+        type: 'victor-kline-strategy',
+        dir: '/packages/wtc-kline-strategy/docs',
+      },
       { type: 'victor-exchange-go', dir: '/packages/wtc-exchange-go/docs' },
-
+      { type: 'victor-message-push', dir: '/packages/wtc-message-push/docs' },
     ],
     codeBlockMode: 'passive',
   },
@@ -55,6 +58,10 @@ export default defineConfig({
     '@victor/victor-exchange-go': path.join(
       __dirname,
       'packages/wtc-exchange-go/src',
+    ),
+    '@victor/victor-message-push': path.join(
+      __dirname,
+      'packages/wtc-message-push/src',
     ),
   },
   autoAlias: true,

@@ -1,0 +1,27 @@
+{
+  "name": "@victor/victor-message-push",
+  "version": "0.0.1",
+  "description": "victor-message-push",
+  "license": "MIT",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  },
+  "authors": [
+    "wangtiechuanmail@163.com"
+  ]
+}
