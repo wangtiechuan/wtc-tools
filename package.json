@@ -21,11 +21,16 @@
     "start": "pnpm run dev",
     "watch": "lerna run build:watch",
     "watch:common": "lerna run build:watch --scope=@victor/victor-common-tools",
-    "watch:database": "lerna run build:watch --scope=@victor/victor-go-database",
-    "watch:exchange": "lerna run build:watch --scope=@victor/victor-exchange-api",
     "watch:node": "lerna run build:watch --scope=@victor/victor-node-tools",
+    "watch:web": "lerna run build:watch --scope=@victor/victor-web-tools",
     "watch:react": "lerna run build:watch --scope=@victor/victor-react-comp",
-    "watch:web": "lerna run build:watch --scope=@victor/victor-web-tools"
+    "watch:database": "lerna run build:watch --scope=@victor/victor-go-database",
+    "watch:exchangeApi": "lerna run build:watch --scope=@victor/victor-exchange-api",
+    "watch:savekline": "lerna run build:watch --scope=@victor/victor-save-kline",
+    "watch:klineStrategy": "lerna run build:watch --scope=@victor/victor-kline-strategy",
+    "watch:exchangeGo": "lerna run build:watch --scope=@victor/victor-exchange-go",
+    "watch:messagePush": "lerna run build:watch --scope=@victor/victor-message-push",
+    "watch:klineView": "lerna run build:watch --scope=@victor/victor-kline-view"
   },
   "commitlint": {
     "extends": [

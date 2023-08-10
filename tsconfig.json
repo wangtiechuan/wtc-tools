@@ -28,7 +28,8 @@
       "@victor/victor-exchange-go": ["./packages/wtc-exchange-go/src/index.ts"],
       "@victor/victor-message-push": [
         "./packages/wtc-message-push/src/index.ts"
-      ]
+      ],
+      "@victor/victor-kline-view": ["./packages/wtc-kline-view/src/index.ts"]
     }
   },
   "include": [

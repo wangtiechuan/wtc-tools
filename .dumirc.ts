@@ -18,6 +18,7 @@ export default defineConfig({
       },
       { type: 'victor-exchange-go', dir: '/packages/wtc-exchange-go/docs' },
       { type: 'victor-message-push', dir: '/packages/wtc-message-push/docs' },
+      { type: 'victor-kline-view', dir: '/packages/wtc-kline-view/docs' },
     ],
     codeBlockMode: 'passive',
   },
@@ -62,6 +63,10 @@ export default defineConfig({
     '@victor/victor-message-push': path.join(
       __dirname,
       'packages/wtc-message-push/src',
+    ),
+    '@victor/victor-kline-view': path.join(
+      __dirname,
+      'packages/wtc-kline-view/src',
     ),
   },
   autoAlias: true,

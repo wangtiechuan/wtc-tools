@@ -117,6 +117,12 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
 
+  packages/wtc-kline-view:
+    dependencies:
+      klinecharts:
+        specifier: ^9.5.0
+        version: 9.5.0
+
   packages/wtc-message-push:
     dependencies:
       axios:
@@ -9270,6 +9276,11 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
     dev: true
+
+  /klinecharts@9.5.0:
+    resolution: {integrity: sha512-yAzkq7qoZcCiHOyQDrsBAsQT5osBGskg7yhrWoz97ty1dC8gckrlfQmSaX0S7r2nCTTmfHjeXJwY5G3Qh5e8EA==}
+    engines: {node: '>=16.0.0'}
+    dev: false
 
   /known-css-properties@0.27.0:
     resolution: {integrity: sha512-uMCj6+hZYDoffuvAJjFAPz56E9uoowFHmTkqRtRq5WyC5Q6Cu/fTZKNQpX/RbzChBYLLl3lo8CjFZBAZXq9qFg==}
