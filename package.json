@@ -13,6 +13,7 @@
     "build": "lerna run build",
     "dev": "dumi dev",
     "devi": "nrm use taobao && pnpm i",
+    "devUpdate": "nrm use taobao && pnpm update",
     "docs:build": "dumi build",
     "preinstall": "npx -y only-allow pnpm",
     "lint": "pnpm run lint:es && pnpm run lint:css",
