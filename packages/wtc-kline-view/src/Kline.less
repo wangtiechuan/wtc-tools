@@ -58,6 +58,9 @@
     border-right: 1px solid #ddd;
     transition: all linear 300ms;
     overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .svgbox {
       padding: 4px;
       border: none;
@@ -104,6 +107,7 @@
         border-radius: 2px;
         cursor: pointer;
         margin-top: 6px;
+        color: #929aa5;
         &.cleatmark {
           border-top: 1px solid #393a3e;
           padding-top: 12px;

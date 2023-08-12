@@ -1,1 +1,3 @@
-export * from './klineView';
+export * from './klineViewPage';
+export * from './FullPageContainer';
+export * from './Kline';

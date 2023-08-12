@@ -8,3 +8,6 @@ nav:
 ```jsx
 import * as KlineView from '@victor/victor-kline-view';
 ```
+
+ **DEMO**
+<code src="./demos/KlineView.tsx"></code>
