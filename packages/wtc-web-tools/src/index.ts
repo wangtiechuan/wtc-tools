@@ -1,3 +1,4 @@
+export * from './createCssVariable';
 export * from './createScript';
 export * from './dataURLtoFile';
 export * from './getImageDataURL';

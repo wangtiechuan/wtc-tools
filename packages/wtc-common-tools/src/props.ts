@@ -1,3 +1,7 @@
+export interface AnyObject {
+  [k: string]: any;
+}
+
 export function isObject(value: unknown): value is object {
   return typeof value === 'object' && value !== null;
 }

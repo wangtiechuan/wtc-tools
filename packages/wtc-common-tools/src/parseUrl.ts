@@ -11,6 +11,11 @@ export function parseUrl(urlStr: string): UrlInfo | null {
     const params: Record<string, string | null> = {};
 
     url.searchParams.forEach((value, key) => {
+      let _value = value;
+      if (_value === 'undefined' || _value === 'null') {
+        _value = '';
+        return;
+      }
       params[key] = value;
     });
 
