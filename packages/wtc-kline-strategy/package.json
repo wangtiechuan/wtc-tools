@@ -4,12 +4,10 @@
   "description": "victor-kline-strategy",
   "license": "MIT",
   "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "esm/index.d.ts",
+  "types": "cjs/index.d.ts",
   "files": [
     "dist",
-    "cjs",
-    "esm"
+    "cjs"
   ],
   "scripts": {
     "build": "father build",
