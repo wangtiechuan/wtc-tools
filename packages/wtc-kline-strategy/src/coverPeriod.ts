@@ -30,7 +30,7 @@ class TouchWeightPeriod {
   touchPercentMin: number;
   touchPercentMax: number;
 
-  constructor(data: any[], cfg?: TouchWeightPeriodCfg) {
+  constructor(data: KlineItem[], cfg?: TouchWeightPeriodCfg) {
     const {
       taMaFunc = taMa,
       minPeriod = 3,
@@ -78,7 +78,7 @@ class TouchWeightPeriod {
     return Array.from(new Set(arr)).sort((a, b) => a - b);
   }
 
-  get closesData() {
+  getClosesData() {
     return this.data.map((k) => Number(k.close));
   }
 
@@ -100,7 +100,7 @@ class TouchWeightPeriod {
     for (let idx = 0; idx < this.periodList.length; idx++) {
       const period = this.periodList[idx];
 
-      const dataMa = this.taMaFunc.ma(this.closesData, period);
+      const dataMa = this.taMaFunc.ma(this.getClosesData(), period);
       const touchCount = this.data.reduce((v, kline, index) => {
         if (index === 0) {
           return v;
