@@ -1,7 +1,144 @@
+import { Precise } from '@victor/victor-exchange-api';
 import { KlineItem, findManyKline } from '@victor/victor-go-database';
-import { TaMaType, floatRound, taMa } from './calc';
+import * as tb from 'talib-binding';
 
-export const fibonacciNumber = [
+// 用于在talib计算结果时（如ma计算会丢失前面的不够周期计算的数组），补足数组的长度
+function fillTaPreRes(taMethodRes: number[], optTime_Period: number) {
+  const nanArr: (number | null)[] = [];
+  nanArr.length = optTime_Period - 1;
+  nanArr.fill(null);
+  return nanArr.concat(taMethodRes);
+}
+
+type TaMaTypeProps = (
+  inReal: number[],
+  optTime_Period: number,
+) => (number | null)[];
+
+export type TaMaTypeName = 'ma' | 'ema';
+
+export interface TaMaType {
+  ma: TaMaTypeProps;
+  name: TaMaTypeName;
+}
+
+// ma
+export const taMa: TaMaType = {
+  name: 'ma',
+  ma: (inReal: number[], optTime_Period: number) =>
+    fillTaPreRes(tb.MA(inReal, optTime_Period), optTime_Period),
+};
+
+// ema
+export const taEma: TaMaType = {
+  name: 'ema',
+  ma: (inReal: number[], optTime_Period: number) =>
+    fillTaPreRes(tb.EMA(inReal, optTime_Period), optTime_Period),
+};
+
+// 对输入的所有 nums 参数进行 Precise库中的方法 累计计算
+function cumulativeCalc(
+  preciseCalcFunc: (
+    string1: string,
+    string2: string,
+    precision?: number,
+  ) => string | undefined,
+  nums: (number | string)[],
+  precision?: number,
+): string | undefined {
+  return nums.reduce((v: any, a: any) => {
+    if (isNaN(Number(a))) {
+      return v;
+    }
+
+    const _a = String(a);
+    if (v === undefined) {
+      return _a;
+    }
+    return preciseCalcFunc(v, _a, precision);
+  }, undefined);
+}
+
+// 加法
+export function add(...nums: (number | string)[]): string | undefined {
+  return cumulativeCalc(Precise.stringAdd, nums);
+}
+
+// 减法
+export function sub(...nums: (number | string)[]): string | undefined {
+  return cumulativeCalc(Precise.stringSub, nums);
+}
+
+// 乘法
+export function mul(...nums: (number | string)[]): string | undefined {
+  return cumulativeCalc(Precise.stringMul, nums);
+}
+
+// 除法
+export function div(
+  nums: (number | string)[],
+  precision?: number,
+): string | undefined {
+  return cumulativeCalc(Precise.stringDiv, nums, precision);
+}
+
+// round，保留指定小数
+export function floatRound(n: number | string, m: number | string) {
+  const mPow = Math.pow(10, Number(m));
+  return div([Math.round(Number(mul(n, mPow)!)), mPow]);
+}
+
+// floor，保留指定小数
+export function floatFloor(n: number | string, m: number | string) {
+  const mPow = Math.pow(10, Number(m));
+  return div([Math.floor(Number(mul(n, mPow)!)), mPow]);
+}
+
+// 一个区间内的随机数
+export function intervalRandomNumber(
+  min: number | string,
+  max: number | string,
+) {
+  const dis = sub(max, min)!;
+  const randomDis = mul(Math.random(), dis)!;
+  return add(min, randomDis)!;
+}
+
+// 获取数字的精度的值
+export function getNumberFixedLen(num?: number | string | null) {
+  if (!num) {
+    return 0;
+  }
+  const str = String(num);
+  const strArr = str.split('.');
+  const len = strArr?.[1]?.length || 0;
+  return len;
+}
+
+// 从k线数据中分析出精度的值
+export function getNumberFixedLenFromData(data: KlineItem[]) {
+  const _data = data.slice(data.length - 5);
+  return _data.reduce((v, item) => {
+    const flen = getNumberFixedLen(item?.close);
+    if (v < flen) {
+      return flen;
+    }
+    return v;
+  }, 0);
+}
+
+// 对开盘和收盘进行排序
+export function getCandleMainSort(kline: KlineItem) {
+  const candleMainSort = [kline.open, kline.close].sort(
+    (a, b) => Number(a) - Number(b),
+  );
+  return {
+    smaller: Number(candleMainSort[0]),
+    bigger: Number(candleMainSort[1]),
+  };
+}
+
+const fibonacciNumber = [
   1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987,
 ]; // 1000以内的斐波那契数列
 
@@ -10,6 +147,18 @@ interface TouchRes {
   // dataCount: number;
   // touchCount: number;
   touchPercent: number;
+}
+
+interface PeriodResProps {
+  resDataInfo: {
+    distanceMaxFrom?: TouchRes;
+    distanceMaxTo?: TouchRes;
+    percentResMin?: TouchRes;
+    waveFrom?: TouchRes;
+    waveto?: TouchRes;
+  };
+  basePercentRes?: TouchRes;
+  wavePercentRes?: TouchRes;
 }
 
 interface TouchWeightPeriodCfg {
@@ -21,7 +170,7 @@ interface TouchWeightPeriodCfg {
   touchPercentMax?: number;
 }
 
-class TouchWeightPeriod {
+export class TouchWeightPeriod {
   data: KlineItem[];
   taMaFunc = taMa;
   minPeriod: number;
@@ -34,8 +183,8 @@ class TouchWeightPeriod {
     const {
       taMaFunc = taMa,
       minPeriod = 3,
-      maxPeriod = 100,
-      periodStep = 2,
+      maxPeriod = 144,
+      periodStep = 1,
       touchPercentMin = 50,
       touchPercentMax = 100,
     } = cfg || {};
@@ -47,8 +196,13 @@ class TouchWeightPeriod {
     this.touchPercentMin = touchPercentMin;
     this.touchPercentMax = touchPercentMax;
   }
+
   get dataLen() {
     return this.data.length;
+  }
+
+  destory() {
+    this.data = [];
   }
 
   get lenMaxPeriod() {
@@ -185,6 +339,8 @@ class TouchWeightPeriod {
       }, []);
     }
 
+    // console.log('percentFilterRes', percentFilterRes);
+
     // 离指定最小概率（如50%，相当于临界概率周期）最近的周期
     const percentResMin = percentFilterRes[0];
 
@@ -294,18 +450,6 @@ class TouchWeightPeriod {
       waveto,
     };
 
-    interface PeriodResProps {
-      resDataInfo: {
-        distanceMaxFrom?: TouchRes;
-        distanceMaxTo?: TouchRes;
-        percentResMin?: TouchRes;
-        waveFrom?: TouchRes;
-        waveto?: TouchRes;
-      };
-      basePercentRes?: TouchRes;
-      wavePercentRes?: TouchRes;
-    }
-
     const res: PeriodResProps = {
       resDataInfo,
       basePercentRes,
@@ -323,19 +467,19 @@ class TouchWeightPeriod {
 
   getOutOpenAndClose() {
     return this.getPeriod((maItem, kline) => {
-      const candleMainSort = [kline.open, kline.close].sort(
-        (a, b) => Number(a) - Number(b),
-      ) as [number, number];
-      return maItem >= candleMainSort[1] || maItem <= candleMainSort[0];
+      const candleMainSort = getCandleMainSort(kline);
+      return (
+        maItem >= candleMainSort.bigger || maItem <= candleMainSort.smaller
+      );
     }, true);
   }
 
   getInnerOpen2Close() {
     return this.getPeriod((maItem, kline) => {
-      const candleMainSort = [kline.open, kline.close].sort(
-        (a, b) => Number(a) - Number(b),
-      ) as [number, number];
-      return maItem >= candleMainSort[0] && maItem <= candleMainSort[1];
+      const candleMainSort = getCandleMainSort(kline);
+      return (
+        maItem >= candleMainSort.smaller && maItem <= candleMainSort.bigger
+      );
     });
   }
 
@@ -347,18 +491,16 @@ class TouchWeightPeriod {
 
   getInnerOpen2LowAndClose2High() {
     return this.getPeriod((maItem, kline) => {
-      const candleMainSort = [kline.open, kline.close].sort(
-        (a, b) => Number(a) - Number(b),
-      ) as [number, number];
+      const candleMainSort = getCandleMainSort(kline);
       return (
-        (maItem >= candleMainSort[1] && maItem <= Number(kline.high)) ||
-        (maItem <= candleMainSort[0] && maItem >= Number(kline.low))
+        (maItem >= candleMainSort.bigger && maItem <= Number(kline.high)) ||
+        (maItem <= candleMainSort.smaller && maItem >= Number(kline.low))
       );
     });
   }
 }
 
-findManyKline('BTC/USDT', '1h')
+findManyKline('BTC/USDT', '1d')
   .then((data: any) => {
     const twp = new TouchWeightPeriod(data, {
       // touchPercentMin: 30,

@@ -1,6 +1,6 @@
-import * as tb from 'talib-binding';
 import { Precise } from '@victor/victor-exchange-api';
 import { KlineItem } from '@victor/victor-go-database';
+import * as tb from 'talib-binding';
 
 // 用于在talib计算结果时（如ma计算会丢失前面的不够周期计算的数组），补足数组的长度
 function fillTaPreRes(taMethodRes: number[], optTime_Period: number) {
@@ -763,4 +763,43 @@ export class TouchWeightPeriod {
       return preCount;
     }, 'shorter');
   }
+}
+
+export function mijiDistanceRange(data: number[], decimal = 0, percent = 80) {
+  const len = data.length;
+  if (len <= 2) {
+    return data;
+  }
+  const scortData = data.slice(0).sort((a, b) => a - b);
+  const distanceArrs: {
+    disVal: number;
+    arrs: number[];
+  }[] = [];
+
+  scortData.forEach((item, index) => {
+    if (index === 0) {
+      return;
+    }
+    const preItem = scortData[index - 1];
+    const disVal = Number((item - preItem).toFixed(decimal));
+
+    if (distanceArrs.length === 0) {
+      distanceArrs.push({
+        disVal,
+        arrs: [preItem, item],
+      });
+    } else {
+      const preDistanceItem = distanceArrs[distanceArrs.length - 1];
+      if (preDistanceItem.disVal === disVal) {
+        preDistanceItem.arrs.push(item);
+      } else {
+        distanceArrs.push({
+          disVal,
+          arrs: [preItem, item],
+        });
+      }
+    }
+  });
+
+  console.log(distanceArrs);
 }

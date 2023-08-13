@@ -677,7 +677,7 @@ export function KlineChartView() {
     // 覆盖指标（先使用再覆盖）
     // kLineChart.overrideIndicator({
     //   name: 'MA',
-    //   calcParams: [5, 93],
+    //   calcParams: [4, 53],
     //   precision: 4,
     // });
 
@@ -688,7 +688,7 @@ export function KlineChartView() {
     kLineChart.createIndicator(
       {
         name: 'MA',
-        calcParams: [5, 93],
+        calcParams: [4, 53],
         precision: 4,
       },
       false,
@@ -733,17 +733,17 @@ export function KlineChartView() {
     kLineChart.applyNewData(generatedDataList());
 
     // 实时更新数据
-    // setInterval(() => {
-    //   const dataList = kLineChart.getDataList();
-    //   const lastData = dataList[dataList.length - 1];
-    //   const newData = generatedDataList(
-    //     lastData.timestamp,
-    //     lastData.close,
-    //     1,
-    //   )[0];
-    //   newData.timestamp += 1000 * 60;
-    //   kLineChart.updateData(newData);
-    // }, 1000);
+    setInterval(() => {
+      const dataList = kLineChart.getDataList();
+      const lastData = dataList[dataList.length - 1];
+      const newData = generatedDataList(
+        lastData.timestamp,
+        lastData.close,
+        1,
+      )[0];
+      newData.timestamp += 1000 * 60;
+      kLineChart.updateData(newData);
+    }, 1000);
 
     // 历史数据
     // kLineChart.applyNewData(generatedDataList(Date.now(), 5000, 200),true);
