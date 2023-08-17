@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import useStateCanMerge from '../useStateCanMerge';
-import parseTimeRanges from './parseTimeRanges';
+import useSetState from '../useSetState';
+import parseTimeRanges from '../misc/parseTimeRanges';
 
 export interface HTMLMediaProps
   extends React.AudioHTMLAttributes<any>,
@@ -31,7 +31,7 @@ export interface HTMLMediaControls {
 type MediaPropsWithRef<T> = HTMLMediaProps & { ref?: React.MutableRefObject<T | null> };
 
 export default function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVideoElement>(
-  tag: 'audio' | 'video',
+  tag: 'audio' | 'video'
 ) {
   return (elOrProps: HTMLMediaProps | React.ReactElement<HTMLMediaProps>) => {
     let element: React.ReactElement<MediaPropsWithRef<T>> | undefined;
@@ -44,7 +44,7 @@ export default function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVid
       props = elOrProps;
     }
 
-    const [state, setState] = useStateCanMerge<HTMLMediaState>({
+    const [state, setState] = useSetState<HTMLMediaState>({
       buffered: [],
       time: 0,
       duration: 0,
@@ -55,9 +55,7 @@ export default function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVid
     });
     const ref = useRef<T | null>(null);
 
-    // @ts-ignore
     const wrapEvent = (userEvent, proxyEvent?) => {
-      // @ts-ignore
       return (event) => {
         try {
           proxyEvent && proxyEvent(event);
@@ -209,6 +207,21 @@ export default function createHTMLMediaHook<T extends HTMLAudioElement | HTMLVid
       const el = ref.current!;
 
       if (!el) {
+        if (process.env.NODE_ENV !== 'production') {
+          if (tag === 'audio') {
+            console.error(
+              'useAudio() ref to <audio> element is empty at mount. ' +
+                'It seem you have not rendered the audio element, which it ' +
+                'returns as the first argument const [audio] = useAudio(...).'
+            );
+          } else if (tag === 'video') {
+            console.error(
+              'useVideo() ref to <video> element is empty at mount. ' +
+                'It seem you have not rendered the video element, which it ' +
+                'returns as the first argument const [video] = useVideo(...).'
+            );
+          }
+        }
         return;
       }
 

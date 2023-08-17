@@ -1,16 +1,13 @@
-import { useEffect } from 'react';
-import useLatest from './useLatest';
+import { useRef } from 'react';
+import useEffectOnce from './useEffectOnce';
 
-// 在组件卸载（unmount）时执行的 Hook。
-const useUnmount = (fn: () => void) => {
-  const fnRef = useLatest(fn);
+const useUnmount = (fn: () => any): void => {
+  const fnRef = useRef(fn);
 
-  useEffect(
-    () => () => {
-      fnRef.current();
-    },
-    [],
-  );
+  // update the ref each render so if it change the newest callback will be invoked
+  fnRef.current = fn;
+
+  useEffectOnce(() => () => fnRef.current());
 };
 
 export default useUnmount;

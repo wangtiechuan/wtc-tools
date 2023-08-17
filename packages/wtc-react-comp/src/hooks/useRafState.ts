@@ -1,29 +1,24 @@
-import { useCallback, useRef, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
+
 import useUnmount from './useUnmount';
 
-function useRafState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
-function useRafState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
-
-// 只在 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback 时更新 state，一般用于性能优化。
-function useRafState<S>(initialState?: S | (() => S)) {
-  const ref = useRef(0);
+const useRafState = <S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>] => {
+  const frame = useRef(0);
   const [state, setState] = useState(initialState);
 
   const setRafState = useCallback((value: S | ((prevState: S) => S)) => {
-    cancelAnimationFrame(ref.current);
+    cancelAnimationFrame(frame.current);
 
-    ref.current = requestAnimationFrame(() => {
-      // @ts-ignore
+    frame.current = requestAnimationFrame(() => {
       setState(value);
     });
   }, []);
 
   useUnmount(() => {
-    cancelAnimationFrame(ref.current);
+    cancelAnimationFrame(frame.current);
   });
 
-  return [state, setRafState] as const;
-}
+  return [state, setRafState];
+};
 
 export default useRafState;

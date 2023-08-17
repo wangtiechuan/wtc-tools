@@ -1,7 +1,7 @@
 import writeText from 'copy-to-clipboard';
 import { useCallback } from 'react';
-import useStateCanMerge from './useStateCanMerge';
 import useMountedState from './useMountedState';
+import useSetState from './useSetState';
 
 export interface CopyToClipboardState {
   value?: string;
@@ -11,7 +11,7 @@ export interface CopyToClipboardState {
 
 const useCopyToClipboard = (): [CopyToClipboardState, (value: string) => void] => {
   const isMounted = useMountedState();
-  const [state, setState] = useStateCanMerge<CopyToClipboardState>({
+  const [state, setState] = useSetState<CopyToClipboardState>({
     value: undefined,
     error: undefined,
     noUserInteraction: true,
@@ -27,7 +27,7 @@ const useCopyToClipboard = (): [CopyToClipboardState, (value: string) => void] =
       // only strings and numbers casted to strings can be copied to clipboard
       if (typeof value !== 'string' && typeof value !== 'number') {
         const error = new Error(
-          `Cannot copy typeof ${typeof value} to clipboard, must be a string`,
+          `Cannot copy typeof ${typeof value} to clipboard, must be a string`
         );
         if (process.env.NODE_ENV === 'development') console.error(error);
         setState({
@@ -58,9 +58,7 @@ const useCopyToClipboard = (): [CopyToClipboardState, (value: string) => void] =
     } catch (error) {
       setState({
         value: normalizedValue,
-        // @ts-ignore
         error,
-        // @ts-ignore
         noUserInteraction,
       });
     }

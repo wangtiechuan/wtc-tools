@@ -1,28 +1,20 @@
-import { useCallback, useEffect, useRef } from 'react';
-import useMemoizedFn from './useMemoizedFn';
+import { useEffect, useRef } from 'react';
 
-const useInterval = (fn: () => void, delay?: number, options: { immediate?: boolean } = {}) => {
-  const timerCallback = useMemoizedFn(fn);
-  const timerRef = useRef<NodeJS.Timer | null>(null);
-
-  const clear = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-  }, []);
+const useInterval = (callback: Function, delay?: number | null) => {
+  const savedCallback = useRef<Function>(() => {});
 
   useEffect(() => {
-    if (!(typeof delay === 'number') || delay < 0) {
-      return;
-    }
-    if (options.immediate) {
-      timerCallback();
-    }
-    timerRef.current = setInterval(timerCallback, delay);
-    return clear;
-  }, [delay, options.immediate]);
+    savedCallback.current = callback;
+  });
 
-  return clear;
+  useEffect(() => {
+    if (delay !== null) {
+      const interval = setInterval(() => savedCallback.current(), delay || 0);
+      return () => clearInterval(interval);
+    }
+
+    return undefined;
+  }, [delay]);
 };
 
 export default useInterval;
