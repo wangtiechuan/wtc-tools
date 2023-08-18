@@ -1,8 +1,6 @@
 *env*
-local*
-*keys.ts
-*keys.js
-
+local.*
+local.keys.ts
 
 node_modules
 /dist
