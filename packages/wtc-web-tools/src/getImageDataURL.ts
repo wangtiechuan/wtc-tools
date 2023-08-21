@@ -1,13 +1,12 @@
+import { getWindowURL } from './getWindowURL';
+
 // 图片转 url
 export function getImageDataURL(image: File) {
-  return new Promise((resolve) => {
-    if (URL.createObjectURL) {
-      resolve(URL.createObjectURL(image));
-      return;
-    }
+  return new Promise<string>((resolve) => {
+    const WURL = getWindowURL();
 
-    if (window.webkitURL) {
-      resolve(window.webkitURL.createObjectURL(image));
+    if (WURL) {
+      resolve(WURL.createObjectURL(image));
       return;
     }
 

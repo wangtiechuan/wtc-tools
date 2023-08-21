@@ -18,8 +18,9 @@
     "doctor": "father doctor",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "dependencies": {},
-  "peerDependencies": {},
+  "dependencies": {
+    "exif-js": "^2.3.0"
+  },
   "authors": [
     "wangtiechuanmail@163.com"
   ]
