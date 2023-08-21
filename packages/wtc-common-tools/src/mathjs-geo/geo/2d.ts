@@ -1,11 +1,23 @@
 /* eslint-disable no-param-reassign */
-import { arrayExtent, arrayMin, errLog, isType } from '../helper';
 import { add, div, multi, sub } from '../math/calc';
-import { round } from '../math/post';
 
 type XY = [number, number];
 
 type DotXY = [XY, XY];
+
+export function arrayMinAndMax(arr: number[]): [number, number] {
+  return [Math.min(...arr), Math.max(...arr)];
+}
+
+/**
+ * 小数四舍五入
+ * @param number 数字
+ * @param d 小数点后保留的位数
+ * @returns {number}
+ */
+export const round = (number: number, d = 4) => {
+  return parseFloat(Number.prototype.toFixed.call(number, parseInt(d)));
+};
 
 /**
  * 判断点是否在线段上
@@ -18,9 +30,13 @@ type DotXY = [XY, XY];
  * @param t 偏差值(有时非常接近线段也认为在线段上，而且浮点数计算不精准)
  * @returns {boolean} 返回判断结果
  */
-const pointOnLine = ([x, y]: XY, [[x1, y1], [x2, y2]]: DotXY, t?: number) => {
-  const rangeX = arrayExtent([x1, x2]);
-  const rangeY = arrayExtent([y1, y2]);
+export const pointOnLine = (
+  [x, y]: XY,
+  [[x1, y1], [x2, y2]]: DotXY,
+  t: number = 0.01,
+) => {
+  const rangeX = arrayMinAndMax([x1, x2]);
+  const rangeY = arrayMinAndMax([y1, y2]);
   t = t || 0.01;
   if (x < rangeX[0] || x > rangeX[1] || y < rangeY[0] || y > rangeY[1]) {
     return false;
@@ -49,7 +65,7 @@ const pointOnLine = ([x, y]: XY, [[x1, y1], [x2, y2]]: DotXY, t?: number) => {
  * @param y2 直线点2y坐标
  * @returns {*} 返回k与b，在直线与y轴平行的情况下，返回null
  */
-const getKB = ([[x1, y1], [x2, y2]]: DotXY) => {
+export const getKB = ([[x1, y1], [x2, y2]]: DotXY) => {
   if (x1 !== x2) {
     const k = round(div(sub(y1, y2), sub(x1, x2)), 5);
     const b = round(sub(y1, multi(k, x1)), 5);
@@ -72,7 +88,7 @@ const getKB = ([[x1, y1], [x2, y2]]: DotXY) => {
  * @param y2 直线点2y坐标
  * @param l 所求线段长度
  */
-const getVertical = (
+export const getVertical = (
   [x, y]: XY,
   [[x1, y1], [x2, y2]]: DotXY,
   l: number,
@@ -98,6 +114,7 @@ const getVertical = (
     pairX = [sub(x, div(l, 2)), add(x, div(l, 2))];
     pairY = [y, y];
   }
+  // @ts-ignore
   return pairX.map((v, i) => [v, pairY[i]]);
 };
 
@@ -112,25 +129,27 @@ const getVertical = (
  * @param y2 直线点2y坐标
  * @param l 长度
  */
-const getParallel = function ([x, y], [[x1, y1], [x2, y2]], l) {
-  if (!isType([x, y, x1, y1, x2, y2, l], 'Number', true)) {
-    errLog('getParallel function params error.');
-    return;
-  }
+export const getParallel = (
+  [x, y]: XY,
+  [[x1, y1], [x2, y2]]: DotXY,
+  l: number,
+): XY => {
   const kb = getKB([
     [x1, y1],
     [x2, y2],
   ]);
-  let pairX, pairY;
+  let pairX: XY, pairY: XY;
   if (kb) {
     const t = round(div(l, 2, Math.sqrt(add(1, Math.pow(kb.k, 2)))), 5);
     const b = round(sub(y, multi(kb.k, x)), 5);
     pairX = [round(sub(x, t), 3), round(add(x, t), 3)];
+    // @ts-ignore
     pairY = pairX.map((v) => round(add(multi(kb.k, v), b), 3));
   } else {
     pairX = [x, x];
     pairY = [sub(y, div(l, 2)), add(y, div(l, 2))];
   }
+  // @ts-ignore
   return pairX.map((v, i) => [v, pairY[i]]);
 };
 
@@ -144,24 +163,26 @@ const getParallel = function ([x, y], [[x1, y1], [x2, y2]], l) {
  * @param y2 直线点2y坐标
  * @param l 距离
  */
-const getExtension = function ([x, y], [[x1, y1], [x2, y2]], l) {
-  if (!isType([x, y, x1, y1, x2, y2, l], 'Number', true)) {
-    errLog('getExtension function params error.');
-    return;
-  }
+export const getExtension = (
+  [x, y]: XY,
+  [[x1, y1], [x2, y2]]: DotXY,
+  l: number,
+): XY => {
   const kb = getKB([
     [x1, y1],
     [x2, y2],
   ]);
-  let pairX, pairY;
+  let pairX: XY, pairY: XY;
   if (kb) {
     const t = round(div(l, Math.sqrt(add(1, Math.pow(kb.k, 2)))), 5);
     pairX = [round(sub(x, t), 3), round(add(x, t), 3)];
+    // @ts-ignore
     pairY = pairX.map((v) => round(add(multi(kb.k, v), kb.b), 3));
   } else {
     pairX = [x, x];
     pairY = [sub(y, div(l, 2)), add(y, div(l, 2))];
   }
+  // @ts-ignore
   return pairX.map((v, i) => [v, pairY[i]]);
 };
 
@@ -173,11 +194,7 @@ const getExtension = function ([x, y], [[x1, y1], [x2, y2]], l) {
  * @param y2 直线点2y坐标
  * @returns {number}
  */
-const getAngle = function ([[x1, y1], [x2, y2]]) {
-  if (!isType([x1, y1, x2, y2], 'Number', true)) {
-    errLog('getAngle function params error.');
-    return 0;
-  }
+export const getAngle = ([[x1, y1], [x2, y2]]: DotXY) => {
   return div(multi(Math.atan2(sub(x1, x2), sub(y1, y2)), 180), Math.PI);
 };
 
@@ -190,11 +207,7 @@ const getAngle = function ([[x1, y1], [x2, y2]]) {
  * @param y2 直线点2y坐标
  * @returns {*} 如果直线与y轴平行，返回null，否则返回y坐标
  */
-const getYFromX = function (x, [[x1, y1], [x2, y2]]) {
-  if (!isType([x, x1, y1, x2, y2], 'Number', true)) {
-    errLog('getYFromX function params error.');
-    return;
-  }
+export const getYFromX = (x: number, [[x1, y1], [x2, y2]]: DotXY) => {
   const kb = getKB([
     [x1, y1],
     [x2, y2],
@@ -215,11 +228,7 @@ const getYFromX = function (x, [[x1, y1], [x2, y2]]) {
  * @param y2 直线点2y坐标
  * @returns {*} 如果直线与x轴平行，返回null，否则返回x坐标
  */
-const getXFromY = function (y, [[x1, y1], [x2, y2]]) {
-  if (!isType([y, x1, y1, x2, y2], 'Number', true)) {
-    errLog('getXFromY function params error.');
-    return;
-  }
+export const getXFromY = (y: number, [[x1, y1], [x2, y2]]: DotXY) => {
   const kb = getKB([
     [x1, y1],
     [x2, y2],
@@ -243,11 +252,10 @@ const getXFromY = function (y, [[x1, y1], [x2, y2]]) {
  * @param y4 线段端点4y坐标
  * @returns {*} 如果相交返回交点[x,y]，否则返回false
  */
-const lineCross = function ([[x1, y1], [x2, y2]], [[x3, y3], [x4, y4]]) {
-  if (!isType([x1, y1, x2, y2, x3, y3, x4, y4], 'Number', true)) {
-    errLog('lineCross function params error.');
-    return;
-  }
+export const lineCross = (
+  [[x1, y1], [x2, y2]]: DotXY,
+  [[x3, y3], [x4, y4]]: DotXY,
+): false | XY => {
   // 三角形abc面积的2倍
   const area123 = sub(
     multi(sub(x1, x3), sub(y2, y3)),
@@ -276,6 +284,7 @@ const lineCross = function ([[x1, y1], [x2, y2]], [[x3, y3], [x4, y4]]) {
   const t = div(area341, sub(area124, area123));
   const dx = multi(t, sub(x2, x1)),
     dy = multi(t, sub(y2, y1));
+  // @ts-ignore
   return [add(x1, dx), add(y1, dy)].map((v) => round(v, 3));
 };
 
@@ -287,27 +296,19 @@ const lineCross = function ([[x1, y1], [x2, y2]], [[x3, y3], [x4, y4]]) {
  * @param minDist 最小距离
  * @returns {number} 找到返回下标，失败返回-1
  */
-const getClosestPointIdx = function ([x, y], pointGroup, minDist) {
-  if (
-    !isType([x, y, minDist], 'Number', true) ||
-    !Array.isArray(pointGroup) ||
-    !pointGroup.length
-  ) {
-    errLog('getClosestPointIdx function params error.');
+export const getClosestPointIdx = (
+  [x, y]: XY,
+  pointGroup: DotXY[],
+  minDist: number,
+) => {
+  const distances2 = pointGroup.map((v) => {
+    return round(add(Math.pow(sub(v[0], x), 2), Math.pow(sub(v[1], y), 2)), 3);
+  });
+  const min = Math.min(...distances2);
+  if (min > Math.pow(minDist, 2)) {
     return -1;
-  } else {
-    const distances2 = pointGroup.map((v) => {
-      return round(
-        add(Math.pow(sub(v[0], x), 2), Math.pow(sub(v[1], y), 2)),
-        3,
-      );
-    });
-    const min = arrayMin(distances2);
-    if (min > Math.pow(minDist, 2)) {
-      return -1;
-    }
-    return distances2.findIndex((v) => v === min);
   }
+  return distances2.findIndex((v) => v === min);
 };
 
 /**
@@ -318,52 +319,33 @@ const getClosestPointIdx = function ([x, y], pointGroup, minDist) {
  * @param minDist 最小距离
  * @returns {number} 找到返回下标，失败返回-1
  */
-const getClosetLineIdx = function ([x, y], lineGroup, minDist) {
-  if (
-    !isType([x, y, minDist], 'Number', true) ||
-    !Array.isArray(lineGroup) ||
-    !lineGroup.length
-  ) {
-    errLog('getClosetLineIdx function params error.');
-    return -1;
-  } else {
-    const distances2 = lineGroup.map((v) => {
-      const kb = getKB([v[0], v[v.length - 1]]);
-      if (kb) {
-        if (kb.k) {
-          const k = round(-div(1, kb.k), 5);
-          const b = round(sub(y, multi(k, x)), 5);
-          const crossX = round(div(sub(b, kb.b), sub(kb.k, k)), 5);
-          const crossY = round(add(multi(kb.k, crossX), kb.b), 5);
-          return round(
-            add(Math.pow(sub(crossX, x), 2), Math.pow(sub(crossY, y), 2)),
-            3,
-          );
-        } else {
-          return round(Math.pow(sub(v[0][1], y), 2), 3);
-        }
+export const getClosetLineIdx = (
+  [x, y]: XY,
+  lineGroup: DotXY[],
+  minDist: number,
+) => {
+  const distances2 = lineGroup.map((v) => {
+    const kb = getKB([v[0], v[v.length - 1]]);
+    if (kb) {
+      if (kb.k) {
+        const k = round(-div(1, kb.k), 5);
+        const b = round(sub(y, multi(k, x)), 5);
+        const crossX = round(div(sub(b, kb.b), sub(kb.k, k)), 5);
+        const crossY = round(add(multi(kb.k, crossX), kb.b), 5);
+        return round(
+          add(Math.pow(sub(crossX, x), 2), Math.pow(sub(crossY, y), 2)),
+          3,
+        );
       } else {
-        return round(Math.pow(sub(v[0][0], x), 2), 3);
+        return round(Math.pow(sub(v[0][1], y), 2), 3);
       }
-    });
-    const min = arrayMin(distances2);
-    if (min > Math.pow(minDist, 2)) {
-      return -1;
+    } else {
+      return round(Math.pow(sub(v[0][0], x), 2), 3);
     }
-    return distances2.findIndex((v) => v === min);
+  });
+  const min = Math.min(...distances2);
+  if (min > Math.pow(minDist, 2)) {
+    return -1;
   }
-};
-
-export {
-  getAngle,
-  getClosestPointIdx,
-  getClosetLineIdx,
-  getExtension,
-  getKB,
-  getParallel,
-  getVertical,
-  getXFromY,
-  getYFromX,
-  lineCross,
-  pointOnLine,
+  return distances2.findIndex((v) => v === min);
 };
