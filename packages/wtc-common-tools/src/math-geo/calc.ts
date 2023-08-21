@@ -1,21 +1,19 @@
 /**
- * 数学计算
- */
-
-/**
  * 数字(浮点数)相加
  * @param args
  * @returns {number}
  */
-const add = (...args) => {
+export const add = (...args: number[]) => {
   if (!args.length) {
     return 0;
   }
   const r = new Array(args.length);
   for (let [key, value] of Object.entries(args)) {
     try {
+      // @ts-ignore
       r[key] = value.toString().split('.')[1].length;
     } catch (e) {
+      // @ts-ignore
       r[key] = 0;
     }
   }
@@ -32,7 +30,7 @@ const add = (...args) => {
  * @param args
  * @returns {number}
  */
-const sub = (...args) => {
+export const sub = (...args: number[]) => {
   const n = args.map((v, i) => {
     return i ? -v : v;
   });
@@ -44,7 +42,7 @@ const sub = (...args) => {
  * @param args
  * @returns {number}
  */
-const multi = (...args) => {
+export const multi = (...args: number[]) => {
   if (!args.length) {
     return 0;
   }
@@ -53,11 +51,15 @@ const multi = (...args) => {
     t = 1;
   for (let [key, value] of Object.entries(args)) {
     try {
+      // @ts-ignore
       r[key] = value.toString().split('.')[1].length;
     } catch (e) {
+      // @ts-ignore
       r[key] = 0;
     }
+    // @ts-ignore
     m += r[key];
+    // @ts-ignore
     t *= value * Math.pow(10, r[key]);
   }
   return t / Math.pow(10, m);
@@ -68,7 +70,7 @@ const multi = (...args) => {
  * @param args
  * @returns {number}
  */
-const div = (...args) => {
+export const div = (...args: number[]) => {
   if (!args.length) {
     return 0;
   }
@@ -90,5 +92,3 @@ const div = (...args) => {
   }
   return d;
 };
-
-export { add, div, multi, sub };

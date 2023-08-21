@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { add, div, multi, sub } from '../math/calc';
+import { add, div, multi, sub } from './calc';
 
 type XY = [number, number];
 
@@ -15,8 +15,8 @@ export function arrayMinAndMax(arr: number[]): [number, number] {
  * @param d 小数点后保留的位数
  * @returns {number}
  */
-export const round = (number: number, d = 4) => {
-  return parseFloat(Number.prototype.toFixed.call(number, parseInt(d)));
+export const round = (number: number, d: string | number = 4) => {
+  return parseFloat(Number.prototype.toFixed.call(number, parseInt(d + '')));
 };
 
 /**
@@ -298,7 +298,7 @@ export const lineCross = (
  */
 export const getClosestPointIdx = (
   [x, y]: XY,
-  pointGroup: DotXY[],
+  pointGroup: XY[],
   minDist: number,
 ) => {
   const distances2 = pointGroup.map((v) => {
