@@ -1,8 +1,4 @@
-/**
- * 数字(浮点数)相加
- * @param args
- * @returns {number}
- */
+// 数字(浮点数)相加
 export const add = (...args: number[]) => {
   if (!args.length) {
     return 0;
@@ -25,11 +21,7 @@ export const add = (...args: number[]) => {
   return t / m;
 };
 
-/**
- * 数字(浮点数)相减
- * @param args
- * @returns {number}
- */
+// 数字(浮点数)相减
 export const sub = (...args: number[]) => {
   const n = args.map((v, i) => {
     return i ? -v : v;
@@ -65,11 +57,7 @@ export const multi = (...args: number[]) => {
   return t / Math.pow(10, m);
 };
 
-/**
- * 数字(浮点数)相除
- * @param args
- * @returns {number}
- */
+// 数字(浮点数)相除
 export const div = (...args: number[]) => {
   if (!args.length) {
     return 0;
