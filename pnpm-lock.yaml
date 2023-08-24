@@ -30,9 +30,6 @@ importers:
       babel-preset-minify:
         specifier: ^0.5.2
         version: 0.5.2
-      decimal.js:
-        specifier: ^10.4.3
-        version: 10.4.3
       dumi:
         specifier: ^2.2.6
         version: 2.2.6(@babel/core@7.22.10)(@types/node@18.17.9)(@types/react@18.2.21)(eslint@8.47.0)(postcss@8.4.28)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.0.7)(stylelint@15.10.3)(typescript@5.1.6)(webpack@5.88.2)
@@ -76,7 +73,18 @@ importers:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.17.9)(typescript@5.1.6)
 
-  packages/wtc-common-tools: {}
+  packages/wtc-common-tools:
+    dependencies:
+      decimal.js:
+        specifier: ^10.4.3
+        version: 10.4.3
+      geometric:
+        specifier: ^2.5.4
+        version: 2.5.4
+    devDependencies:
+      '@types/geometric':
+        specifier: ^2.5.0
+        version: 2.5.0
 
   packages/wtc-exchange-api:
     dependencies:
@@ -3888,6 +3896,10 @@ packages:
       '@types/node': 18.17.9
     dev: true
 
+  /@types/geometric@2.5.0:
+    resolution: {integrity: sha512-NvY/JrTScHwJ53AdM4OQF0nWkat4X3iFD6CgW+nRVAyvb2xBzZs4S589q8zZpCq0eJOS3NoBo7Bqp+BI3VtX+w==}
+    dev: true
+
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
     dependencies:
@@ -7173,7 +7185,7 @@ packages:
 
   /decimal.js@10.4.3:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
-    dev: true
+    dev: false
 
   /decode-named-character-reference@1.0.2:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
@@ -8790,6 +8802,10 @@ packages:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
     dev: true
+
+  /geometric@2.5.4:
+    resolution: {integrity: sha512-6MQ0id8tzpYJ0abWrKX6xI1sQAj8TfAkKSVqo1gLQU6b3oSJcFF8r32Ji+t0efGdYDyY5E3ZgkjAdU6qdxDTyQ==}
+    dev: false
 
   /get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}

@@ -18,9 +18,14 @@
     "doctor": "father doctor",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "dependencies": {},
-  "peerDependencies": {},
+  "dependencies": {
+    "decimal.js": "^10.4.3",
+    "geometric": "^2.5.4"
+  },
   "authors": [
     "wangtiechuanmail@163.com"
-  ]
+  ],
+  "devDependencies": {
+    "@types/geometric": "^2.5.0"
+  }
 }
