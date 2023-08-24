@@ -1,6 +1,5 @@
 export * from './areObjectsEqual';
 export * from './brushText';
-export * from './calc';
 export * from './chunkArray';
 export * from './coverObject';
 export * from './datetime';
@@ -10,6 +9,8 @@ export * from './getAgeDesc';
 export * from './getWindow';
 export * from './insertItemToArr';
 export * from './isBrowser';
+export * from './geoMath';
+export * from './calc';
 export * from './parseUrl';
 export * from './props';
 export * from './removeItemInArr';

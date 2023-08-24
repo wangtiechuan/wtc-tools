@@ -1,23 +1,20 @@
 /* eslint-disable no-param-reassign */
-import { add, div, multi, sub } from './calc';
+import {
+  abs,
+  add,
+  atan2,
+  div,
+  min,
+  minAndMax,
+  multi,
+  pow,
+  sqrt,
+  sub,
+} from './calc';
 
 type XY = [number, number];
 
 type DotXY = [XY, XY];
-
-export function arrayMinAndMax(arr: number[]): [number, number] {
-  return [Math.min(...arr), Math.max(...arr)];
-}
-
-/**
- * 小数四舍五入
- * @param number 数字
- * @param d 小数点后保留的位数
- * @returns {number}
- */
-export const round = (number: number, d: string | number = 4) => {
-  return parseFloat(Number.prototype.toFixed.call(number, parseInt(d + '')));
-};
 
 /**
  * 判断点是否在线段上
@@ -35,24 +32,21 @@ export const pointOnLine = (
   [[x1, y1], [x2, y2]]: DotXY,
   t: number = 0.01,
 ) => {
-  const rangeX = arrayMinAndMax([x1, x2]);
-  const rangeY = arrayMinAndMax([y1, y2]);
+  const rangeX = minAndMax([x1, x2]);
+  const rangeY = minAndMax([y1, y2]);
   t = t || 0.01;
   if (x < rangeX[0] || x > rangeX[1] || y < rangeY[0] || y > rangeY[1]) {
     return false;
   } else {
-    if (Math.abs(sub(y1, y2)) < Math.abs(sub(x1, x2))) {
+    if (abs(sub(y1, y2)) < abs(sub(x1, x2))) {
       [x, y] = [y, x];
       [x1, y1] = [y1, x1];
       [x2, y2] = [y2, x2];
     }
     return (
-      Math.abs(
-        sub(div(sub(x, x1), sub(y, y1)), div(sub(x1, x2), sub(y1, y2))),
-      ) < t ||
-      Math.abs(
-        sub(div(sub(x, x2), sub(y, y2)), div(sub(x1, x2), sub(y1, y2))),
-      ) < t
+      abs(sub(div(sub(x, x1), sub(y, y1)), div(sub(x1, x2), sub(y1, y2)))) <
+        t ||
+      abs(sub(div(sub(x, x2), sub(y, y2)), div(sub(x1, x2), sub(y1, y2)))) < t
     );
   }
 };
@@ -67,8 +61,8 @@ export const pointOnLine = (
  */
 export const getKB = ([[x1, y1], [x2, y2]]: DotXY) => {
   if (x1 !== x2) {
-    const k = round(div(sub(y1, y2), sub(x1, x2)), 5);
-    const b = round(sub(y1, multi(k, x1)), 5);
+    const k = div(sub(y1, y2), sub(x1, x2));
+    const b = sub(y1, multi(k, x1));
     return {
       k,
       b,
@@ -100,12 +94,12 @@ export const getVertical = (
   let pairX: XY, pairY: XY;
   if (kb) {
     if (kb.k) {
-      const k = round(-div(1, kb.k), 5);
-      const b = round(sub(y, multi(k, x)), 5);
-      const t = round(div(l, 2, Math.sqrt(add(1, Math.pow(k, 2)))), 5);
-      pairX = [round(sub(x, t), 3), round(add(x, t), 3)];
+      const k = -div(1, kb.k);
+      const b = sub(y, multi(k, x));
+      const t = div(l, 2, sqrt(add(1, pow(k, 2))));
+      pairX = [sub(x, t), add(x, t)];
       // @ts-ignore
-      pairY = pairX.map((v) => round(add(multi(k, v), b), 3));
+      pairY = pairX.map((v) => add(multi(k, v), b));
     } else {
       pairX = [x, x];
       pairY = [sub(y, div(l, 2)), add(y, div(l, 2))];
@@ -140,11 +134,11 @@ export const getParallel = (
   ]);
   let pairX: XY, pairY: XY;
   if (kb) {
-    const t = round(div(l, 2, Math.sqrt(add(1, Math.pow(kb.k, 2)))), 5);
-    const b = round(sub(y, multi(kb.k, x)), 5);
-    pairX = [round(sub(x, t), 3), round(add(x, t), 3)];
+    const t = div(l, 2, sqrt(add(1, pow(kb.k, 2))));
+    const b = sub(y, multi(kb.k, x));
+    pairX = [sub(x, t), add(x, t)];
     // @ts-ignore
-    pairY = pairX.map((v) => round(add(multi(kb.k, v), b), 3));
+    pairY = pairX.map((v) => add(multi(kb.k, v), b));
   } else {
     pairX = [x, x];
     pairY = [sub(y, div(l, 2)), add(y, div(l, 2))];
@@ -174,10 +168,10 @@ export const getExtension = (
   ]);
   let pairX: XY, pairY: XY;
   if (kb) {
-    const t = round(div(l, Math.sqrt(add(1, Math.pow(kb.k, 2)))), 5);
-    pairX = [round(sub(x, t), 3), round(add(x, t), 3)];
+    const t = div(l, sqrt(add(1, pow(kb.k, 2))));
+    pairX = [sub(x, t), add(x, t)];
     // @ts-ignore
-    pairY = pairX.map((v) => round(add(multi(kb.k, v), kb.b), 3));
+    pairY = pairX.map((v) => add(multi(kb.k, v), kb.b));
   } else {
     pairX = [x, x];
     pairY = [sub(y, div(l, 2)), add(y, div(l, 2))];
@@ -195,7 +189,7 @@ export const getExtension = (
  * @returns {number}
  */
 export const getAngle = ([[x1, y1], [x2, y2]]: DotXY) => {
-  return div(multi(Math.atan2(sub(x1, x2), sub(y1, y2)), 180), Math.PI);
+  return div(multi(atan2(sub(x1, x2), sub(y1, y2)), 180), Math.PI);
 };
 
 /**
@@ -213,7 +207,7 @@ export const getYFromX = (x: number, [[x1, y1], [x2, y2]]: DotXY) => {
     [x2, y2],
   ]);
   if (kb) {
-    return round(add(multi(kb.k, x), kb.b), 3);
+    return add(multi(kb.k, x), kb.b);
   } else {
     return null;
   }
@@ -234,7 +228,7 @@ export const getXFromY = (y: number, [[x1, y1], [x2, y2]]: DotXY) => {
     [x2, y2],
   ]);
   if (kb) {
-    return kb.k ? round(div(sub(y, kb.b), kb.k), 3) : null;
+    return kb.k ? div(sub(y, kb.b), kb.k) : null;
   } else {
     return x1;
   }
@@ -284,8 +278,7 @@ export const lineCross = (
   const t = div(area341, sub(area124, area123));
   const dx = multi(t, sub(x2, x1)),
     dy = multi(t, sub(y2, y1));
-  // @ts-ignore
-  return [add(x1, dx), add(y1, dy)].map((v) => round(v, 3));
+  return [add(x1, dx), add(y1, dy)];
 };
 
 /**
@@ -302,13 +295,13 @@ export const getClosestPointIdx = (
   minDist: number,
 ) => {
   const distances2 = pointGroup.map((v) => {
-    return round(add(Math.pow(sub(v[0], x), 2), Math.pow(sub(v[1], y), 2)), 3);
+    return add(pow(sub(v[0], x), 2), pow(sub(v[1], y), 2));
   });
-  const min = Math.min(...distances2);
-  if (min > Math.pow(minDist, 2)) {
+  const _min = min(...distances2);
+  if (_min > pow(minDist, 2)) {
     return -1;
   }
-  return distances2.findIndex((v) => v === min);
+  return distances2.findIndex((v) => v === _min);
 };
 
 /**
@@ -328,24 +321,21 @@ export const getClosetLineIdx = (
     const kb = getKB([v[0], v[v.length - 1]]);
     if (kb) {
       if (kb.k) {
-        const k = round(-div(1, kb.k), 5);
-        const b = round(sub(y, multi(k, x)), 5);
-        const crossX = round(div(sub(b, kb.b), sub(kb.k, k)), 5);
-        const crossY = round(add(multi(kb.k, crossX), kb.b), 5);
-        return round(
-          add(Math.pow(sub(crossX, x), 2), Math.pow(sub(crossY, y), 2)),
-          3,
-        );
+        const k = -div(1, kb.k);
+        const b = sub(y, multi(k, x));
+        const crossX = div(sub(b, kb.b), sub(kb.k, k));
+        const crossY = add(multi(kb.k, crossX), kb.b);
+        return add(pow(sub(crossX, x), 2), pow(sub(crossY, y), 2));
       } else {
-        return round(Math.pow(sub(v[0][1], y), 2), 3);
+        return pow(sub(v[0][1], y), 2);
       }
     } else {
-      return round(Math.pow(sub(v[0][0], x), 2), 3);
+      return pow(sub(v[0][0], x), 2);
     }
   });
-  const min = Math.min(...distances2);
-  if (min > Math.pow(minDist, 2)) {
+  const _min = min(...distances2);
+  if (_min > pow(minDist, 2)) {
     return -1;
   }
-  return distances2.findIndex((v) => v === min);
+  return distances2.findIndex((v) => v === _min);
 };

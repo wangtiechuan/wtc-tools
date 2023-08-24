@@ -1,54 +1,121 @@
-// 获取小数位数
-export function getDecimalDigits(number: number) {
-  const match = ('' + number).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-  if (!match) {
-    return 0;
+import Decimal from 'decimal.js';
+
+// 数字(浮点数)相加
+export const add = (...args: Decimal.Value[]) => {
+  const len = args?.length || 0;
+  if (!len) {
+    return new Decimal(0).toNumber();
   }
-  return Math.max(
-    0,
-    (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0),
-  );
+
+  if (len === 1) {
+    return new Decimal(args[0]).toNumber();
+  }
+
+  return args
+    .reduce((v: Decimal, item, index) => {
+      if (index === 0) {
+        return v;
+      }
+      return v.add(item);
+    }, new Decimal(args[0]))
+    .toNumber();
+};
+
+// 数字(浮点数)相减
+export const sub = (...args: Decimal.Value[]) => {
+  const len = args?.length || 0;
+  if (!len) {
+    return new Decimal(0).toNumber();
+  }
+
+  if (len === 1) {
+    return new Decimal(args[0]).toNumber();
+  }
+
+  return args
+    .reduce((v: Decimal, item, index) => {
+      if (index === 0) {
+        return v;
+      }
+      return v.sub(item);
+    }, new Decimal(args[0]))
+    .toNumber();
+};
+
+// 数字(浮点数)相乘
+export const multi = (...args: Decimal.Value[]) => {
+  const len = args?.length || 0;
+  if (!len) {
+    return new Decimal(0).toNumber();
+  }
+
+  if (len === 1) {
+    return new Decimal(args[0]).toNumber();
+  }
+
+  return args
+    .reduce((v: Decimal, item, index) => {
+      if (index === 0) {
+        return v;
+      }
+      return v.mul(item);
+    }, new Decimal(args[0]))
+    .toNumber();
+};
+
+// 数字(浮点数)相除
+export const div = (...args: Decimal.Value[]) => {
+  const len = args?.length || 0;
+  if (!len) {
+    return new Decimal(0).toNumber();
+  }
+
+  if (len === 1) {
+    return new Decimal(args[0]).toNumber();
+  }
+
+  return args
+    .reduce((v: Decimal, item, index) => {
+      if (index === 0) {
+        return v;
+      }
+      return v.div(item);
+    }, new Decimal(args[0]))
+    .toNumber();
+};
+
+export function min(...n: Decimal.Value[]) {
+  return Decimal.min(...n).toNumber();
 }
 
-// 加法
-export function add(a: number, b: number) {
-  const precision = Math.max(getDecimalDigits(a), getDecimalDigits(b));
-  const factor = Math.pow(10, precision);
-  return (a * factor + b * factor) / factor;
+export function max(...n: Decimal.Value[]) {
+  return Decimal.max(...n).toNumber();
 }
 
-// 减法
-export function subtract(a: number, b: number) {
-  const precision = Math.max(getDecimalDigits(a), getDecimalDigits(b));
-  const factor = Math.pow(10, precision);
-  return (a * factor - b * factor) / factor;
+export function minAndMax(arr: Decimal.Value[]): [number, number] {
+  return [min(...arr), max(...arr)];
 }
 
-// 乘法
-export function multiply(a: number, b: number) {
-  const precision = getDecimalDigits(a) + getDecimalDigits(b);
-  const factor = Math.pow(10, precision);
-  return (a * factor * (b * factor)) / (factor * factor);
+export function abs(n: Decimal.Value) {
+  return Decimal.abs(n).toNumber();
 }
 
-// 除法
-export function divide(a: number, b: number) {
-  const precision = getDecimalDigits(a) - getDecimalDigits(b);
-  const factor = Math.pow(10, precision);
-  return (a * factor) / (b * factor);
+export function sqrt(n: Decimal.Value) {
+  return Decimal.sqrt(n).toNumber();
 }
 
-// 求和
-export function sum(numbers: number[]) {
-  return numbers.reduce((acc, num) => add(acc, num), 0);
+export function pow(base: Decimal.Value, exponent: Decimal.Value) {
+  return Decimal.pow(base, exponent).toNumber();
 }
 
-// 平均值
-export function mean(numbers: number[]) {
-  return divide(sum(numbers), numbers.length);
+export function atan2(y: Decimal.Value, x: Decimal.Value) {
+  return Decimal.atan2(y, x).toNumber();
 }
 
-// 取余数
-export function mod(a: number, b: number) {
-  return subtract(a, multiply(b, Math.floor(divide(a, b))));
+export function round(n: Decimal.Value) {
+  return Decimal.round(n).toNumber();
+}
+
+export function toFixed(n: Decimal.Value, decimalPlaces?: number) {
+  return new Decimal(new Decimal(n).toFixed(decimalPlaces)).toNumber();
 }

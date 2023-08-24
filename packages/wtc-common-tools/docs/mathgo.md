@@ -4,4 +4,4 @@
 
  **方法`calc`DEMO**
 
-<code src="./demos/calc.tsx"></code>
+<code src="./demos/mathgo.tsx"></code>
