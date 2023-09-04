@@ -6,4 +6,5 @@ export * from './getBlobConstructor';
 export * from './getImageDataURL';
 export * from './getWindowURL';
 export * from './htmlDecode';
+export * from './pureAjax';
 export * from './zipImgLocal';
