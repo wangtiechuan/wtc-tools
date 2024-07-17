@@ -27,7 +27,8 @@ function queryString(strObj?: AnyObject) {
     return queryStr;
   }
   Object.keys(strObj).forEach((key) => {
-    queryStr += `${key}=${strObj[key]}&`;
+    const val = strObj[key]
+    queryStr += `${key}=${val ? decodeURIComponent(strObj[key] ): ''}&`;
   });
   if (queryStr) {
     queryStr = queryStr.slice(0, queryStr.length - 1);
